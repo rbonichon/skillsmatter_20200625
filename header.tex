@@ -1,0 +1,44 @@
+\usetheme{metropolis}
+\usecolortheme{metropolisalternate}
+
+\usepackage{fontspec}
+\setmainfont[Mapping=tex-text]{Barlow}
+\setsansfont{Barlow}
+\setmonofont{Inconsolata}
+
+\usepackage[square,numbers]{natbib}
+\usepackage{minted}
+
+\usepackage{tikz}
+\usetikzlibrary{intersections, arrows, shapes, fit, calc, positioning, automata, fadings,through}
+
+% redefine title page
+\pgfdeclareimage[width=\paperwidth]{mybackground}{./img/slides_tweag_COVER_1.png}
+\setbeamertemplate{title page}{
+  \begin{picture}(0,0)
+    \put(-30,-140){%
+      \pgfuseimage{mybackground}
+    }
+    \put(0,-110.7){%
+      \begin{minipage}[b][45mm][t]{226mm}
+        \usebeamerfont{title}{\inserttitle\par}
+        \usebeamerfont{author}{\insertauthor\par}
+        \insertdate
+      \end{minipage}
+    }
+  \end{picture}
+}
+
+% \usepackage[duration=45,starttime=17:30,lastminutes=5]{pdfpcnotes}
+
+\renewcommand*{\UrlFont}{\ttfamily\tiny}
+
+% Notes
+% Notes seem to be problematic with xelatex but work with pdflatex
+% \usepackage{pgfpages}
+% \setbeameroption{show notes on second screen=bottom}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: intro_ocaml
+%%% End:

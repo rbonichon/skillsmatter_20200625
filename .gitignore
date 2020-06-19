@@ -1,0 +1,11 @@
+/skillsmatter_20200625/introocaml.tex
+/auto/
+/_minted-introocaml/
+/_minted-intro_ocaml/
+/intro_ocaml.bbl
+/intro_ocaml.html~
+/intro_ocaml.tex
+*.cmo
+*.cmi
+*.cmx
+*.byt 

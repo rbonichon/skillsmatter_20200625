@@ -1,0 +1,2457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-06-25 Thu 07:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction to OCaml</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Richard B." />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'OCaml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduction to OCaml</h1>
+
+<div id="outline-container-org4290801" class="outline-2">
+<h2 id="org4290801"><span class="section-number-2">1</span> Background</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org0a95918" class="outline-3">
+<h3 id="org0a95918"><span class="section-number-3">1.1</span> The Categorical Abstract Machine Language</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+OCaml is part of the ML family, like SML (big brother) or F# (little brother).
+</p>
+
+<dl class="org-dl">
+<dt>1973</dt><dd>(classic) ML <a class='org-ref-reference' href="#ClassicML">ClassicML</a></dd>
+<dt>1987-1992</dt><dd>Heavy CAML (LISP-based implementation)</dd>
+<dt>1990-1991</dt><dd>Caml Light</dd>
+<dt>1996</dt><dd>Objective Caml <code>1.00</code></dd>
+<dt>2011</dt><dd>Objective Caml becomes OCaml</dd>
+<dt>2020</dt><dd>OCaml <code>4.10.0</code> (Feb 21)</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org5e563dd" class="outline-3">
+<h3 id="org5e563dd"><span class="section-number-3">1.2</span> OCaml : an open-minded functional language</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-center">
+<p>
+OCaml is <b>not</b> a pure functional language 
+</p>
+</div>
+
+<ul class="org-ul">
+<li>imperative programming is very much part of the nominal toolbox</li>
+
+<li>OOP too when it is the right fit.</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org4e5058d" class="outline-3">
+<h3 id="org4e5058d"><span class="section-number-3">1.3</span> Bytecode and native code support</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+2 compilers for the price of one:
+</p>
+<dl class="org-dl">
+<dt><code>ocamlc</code></dt><dd>a bytecode compiler to a stack-based
+<ul class="org-ul">
+<li>its interpreter <code>ocamlrun</code> works anywhere you have a C compiler</li>
+</ul></dd>
+<dt><code>ocamlopt</code></dt><dd>a native code compiler 
+<ul class="org-ul">
+<li>supports x86 (32/64), ARM (v5-v8), PowerPC (32/64) and &#x2026; SPARC !</li>
+<li>RISC-V will be in <code>4.11</code></li>
+</ul></dd>
+</dl>
+</div>
+</div>
+
+
+
+<div id="outline-container-org50b9e49" class="outline-3">
+<h3 id="org50b9e49"><span class="section-number-3">1.4</span> Users</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>Academic circles
+<dl class="org-dl">
+<dt>academia</dt><dd><b>INRIA</b>, Berkeley, CEA, CMU, UArizona, UPenn</dd>
+<dt>SMEs</dt><dd>OCamlPro/Origin Labs, Nomadic Labs, TrustInSoft, Tarides,</dd>
+</dl></li>
+<li>Financial "institutions" &#x2013; Bloomberg, Jane Street, Lexifi, SimCorp</li>
+<li>Facebook (ReasonML, Infer)</li>
+<li>Atos, AbsInt</li>
+<li>Indirect users: Airbus (Astrée, Frama-C, Fluctuat), EDF, &#x2026;</li>
+<li>&#x2026;</li>
+</ul>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="orga33c21b"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+Its french origin shows in the community. The financial application have
+increased recently but Lexifi started 20 years ago (ICFP 2000)
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org09070a6" class="outline-3">
+<h3 id="org09070a6"><span class="section-number-3">1.5</span> Natural application fields</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>compilers</li>
+<li>program analysis</li>
+<li>theorem proving</li>
+<li>symbolic computations</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org3a1bee8" class="outline-3">
+<h3 id="org3a1bee8"><span class="section-number-3">1.6</span> Tooling (as of 2020)</h3>
+<div class="outline-text-3" id="text-1-6">
+<dl class="org-dl">
+<dt><a href="https://github.com/ocaml/ocaml">compiler</a></dt><dd>last release is <code>4.10</code> (2020-02-21)</dd>
+<dt><a href="https://github.com/ocaml/merlin">merlin</a></dt><dd><p>
+context-sensitive completion for OCaml (in Vim, Emacs, VsCode, &#x2026;)
+</p>
+
+<p>
+A <b>very</b> nice tool which has changed the life of most OCaml developers,
+and it's editor-agnostic !
+</p></dd>
+<dt><a href="https://github.com/ocaml/dune">dune</a></dt><dd><p>
+newest contender in dedicated build systems
+</p>
+
+<p>
+Subsumes <code>OCamlMakefile</code>, <code>omake</code>, <code>ocamlbuild</code>.
+</p></dd>
+
+<dt><a href="https://github.com/ocaml/opam">OPAM</a></dt><dd><p>
+<code>1.0</code> in 2013, current is <code>2.0.7</code> (2020-04-21)
+</p>
+
+<p>
+A source-based package manager for OCaml software.
+</p></dd>
+<dt>Emacs</dt><dd>or another editor</dd>
+</dl>
+
+<div class="org-center">
+<p>
+<a href="https://opam.ocaml.org/blog/turn-your-editor-into-an-ocaml-ide/">https://opam.ocaml.org/blog/turn-your-editor-into-an-ocaml-ide/</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org242c297" class="outline-2">
+<h2 id="org242c297"><span class="section-number-2">2</span> Building blocks</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org46e3db3" class="outline-3">
+<h3 id="org46e3db3"><span class="section-number-3">2.1</span> let-bindings</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-ocaml">let add x y = x + y (* or let add = ( + ) *)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val add : int -&gt; int -&gt; int = &lt;fun&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let simple_main () =
+  let x = read_int () in
+  let y = read_int () in
+  print_int (add x y);
+  print_newline ()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val simple_main : unit -&gt; unit = &lt;fun&gt;
+</pre>
+</div>
+</div>
+
+
+
+<ol class="org-ol">
+<li><a id="org3f00b64"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Name bindings are introduced by <code>let</code>. <code>let .. in</code> is a locally scoped binding.
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orgced26f6" class="outline-3">
+<h3 id="orgced26f6"><span class="section-number-3">2.2</span> Functions: curried by default</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Functions are <b>curried</b> (unlike SML functions).
+</p>
+
+<p>
+<code>add x y</code> actually is <code>(add(x))(y)</code> 
+</p>
+
+<p>
+<code>add</code> can be partially applied, as <code>add x</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let add1 = add 1 ;;
+
+add1 2
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int = 3
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="org578db48"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-2-1">
+<p>
+Currying is taking a multiple argument functions and converting it to n
+1-arg funs
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org0aed16e" class="outline-3">
+<h3 id="org0aed16e"><span class="section-number-3">2.3</span> Corollary</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-center">
+<p>
+Functions are <b>not recursive</b> by default.
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* This second declaration hides the first.*)
+let ( |-&gt; ) lo hi =
+  assert (hi &gt;= lo);
+  lo |-&gt; hi
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val ( |-&gt; ) : int -&gt; int -&gt; int list = &lt;fun&gt;
+</pre>
+</div>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="orgc3fc3d4"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+Assertions are checked at runtime and trigger (catchable) exceptions
+</p>
+
+<p>
+<code>-noassert</code> do not compile time, except the <code>assert false</code> special form.
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org9f59826" class="outline-3">
+<h3 id="org9f59826"><span class="section-number-3">2.4</span> Functions are first-class citizens</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+<pre class="src src-ocaml">(** [max cmp l] computes the maximun element of a list [l] provided a [cmp]
+ ** function conforming to the following specification:
+ ** - cmp x y = 0 if x is equivalent to y
+ ** - cmp x y &gt; 0 if x is bigger than y
+ ** - cmp x y &lt; 0 if x if smaller than y **)
+let max cmp l =
+  let rec loop vmax = function
+    | [] -&gt; vmax
+    | x :: xs -&gt;
+       let vmax' =
+	 match vmax with
+	 | None -&gt; Some x
+	 | Some y -&gt; if cmp x y &gt; 0 then Some x else vmax in
+       loop vmax' xs
+  in loop None l
+;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val max : ('a -&gt; 'a -&gt; int) -&gt; 'a list -&gt; 'a option = &lt;fun&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">max Stdlib.compare [1; 2; 3;] ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int option = Some 3
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* We just hid [Stdlib.max] behind another definition !*)
+Stdlib.max ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : 'a -&gt; 'a -&gt; 'a = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba6aab1" class="outline-3">
+<h3 id="orgba6aab1"><span class="section-number-3">2.5</span> Evaluation is strict</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Laziness (call-by-name / call-by-need) is not the default evaluation mode. 
+</p>
+
+<p>
+OCaml is said to be <b>strict</b> (call-by-value).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let double x = print_int x; 2 * x ;;
+
+(* We forgot to use x ... *)
+let dadd _x y =
+  let x' = double y
+  and y' = double y in
+  (* Infix operators are prefixed ones that are treated specially
+     by the parser. Have fun and create your owns. *)
+  ( + ) x' y' ;;
+
+dadd (double 1) (double 2) ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">2144- : int = 16
+</pre>
+</div>
+
+<p>
+&#x2026; well except for binary Boolean operators &#x2013; of course ;-).
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org71cac0b"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-5-1">
+<p>
+We see not only that all arguments are evaluated (even unused ones), but
+that <code>double y</code> is evaluated twice. Not much optimization is done by default.
+</p>
+
+<p>
+The <code>_</code> prefix notation avoid unused variable warning
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-org0477d90" class="outline-3">
+<h3 id="org0477d90"><span class="section-number-3">2.6</span> Evaluation Oddity</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Evaluation order for function arguments is <b>unspecified</b>.
+</p>
+<p>
+It is usually right-to-left, as exemplified by the snippet below.
+</p>
+<div class="org-src-container">
+<pre class="src src-ocaml">add (print_string "foo!"; 1) (print_string "bar!"; 2) ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">bar!foo!- : int = 3
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">( || ) (print_string "foo!"; false) (print_string "bar!"; true) ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">foo!bar!- : bool = true
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgdbbbb8b" class="outline-3">
+<h3 id="orgdbbbb8b"><span class="section-number-3">2.7</span> Grouping information : Tuples&#xa0;&#xa0;&#xa0;<span class="tag"><span class="proofreading">proofreading</span></span></h3>
+<div class="outline-text-3" id="text-2-7">
+<div class="org-src-container">
+<pre class="src src-ocaml">let a = 1, 2 in
+let x, y = a in
+x + y
+;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int = 3
+</pre>
+</div>
+
+<p>
+can also be written with <code>( .. )</code> as
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let a = (1, 2) in
+let (x, y) = a in
+x + y
+;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int = 3
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org8dedd72" class="outline-3">
+<h3 id="org8dedd72"><span class="section-number-3">2.8</span> Everything is a pattern</h3>
+<div class="outline-text-3" id="text-2-8">
+<div class="org-src-container">
+<pre class="src src-ocaml">let create x y z = x, y, z
+
+(* FP arithmetic operations have a dedicated syntax *)
+let square a = a *. a
+
+let dist (x1, y1, z1) p =
+  let x2, y2, z2 = p in
+  let xdiff = x2 -. x1
+  and ydiff = y2 -. y1
+  and zdiff = z2 -. z1 in
+  square xdiff +. square ydiff +. square zdiff |&gt; sqrt
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val dist : float * float * float -&gt; float * float * float -&gt; float = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org1d2df6d" class="outline-3">
+<h3 id="org1d2df6d"><span class="section-number-3">2.9</span> <code>dist</code>: another version</h3>
+<div class="outline-text-3" id="text-2-9">
+<div class="org-src-container">
+<pre class="src src-ocaml">let dist p1 p2 =
+  match p1, p2 with
+  (* The | can also be used as a separator instead of as a starting
+     annotation. *)
+  | (x1, y1, z1), (x2, y2, z2) -&gt;
+     let xdiff = x2 -. x1
+     and ydiff = y2 -. y1
+     and zdiff = z2 -. z1 in
+     sqrt @@ square xdiff +. square ydiff +. square zdiff
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val dist : float * float * float -&gt; float * float * float -&gt; float = &lt;fun&gt;
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="orgc8dec51"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-9-1">
+<p>
+I've deliberately used <code>@@</code> instead of <code>|&gt;</code> to show yet another infix operator
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orge4713fb" class="outline-3">
+<h3 id="orge4713fb"><span class="section-number-3">2.10</span> Grouping information : Records (aka named tuples)</h3>
+<div class="outline-text-3" id="text-2-10">
+<div class="org-src-container">
+<pre class="src src-ocaml">type point_2d = { x : float; y: float; }  ;;
+
+(* C-like . notations for field access *)
+let dist p1 p2 =
+  let xdiff = p1.x -. p2.x
+  and ydiff = p1.y -. p2.y in
+  sqrt (xdiff *. xdiff +. ydiff *. ydiff)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val dist : point_2d -&gt; point_2d -&gt; float = &lt;fun&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Using pattern-matching *)
+let dist p1 p2 =
+  match p1, p2 with
+  | { x; y; }, { x = x'; y = y';} -&gt;
+     let xdiff = x -. x'
+     and ydiff = y -. y' in
+     sqrt (xdiff *. xdiff +. ydiff *. ydiff)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val dist : point_2d -&gt; point_2d -&gt; float = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2f4ecf5" class="outline-3">
+<h3 id="org2f4ecf5"><span class="section-number-3">2.11</span> Building / destructing records</h3>
+<div class="outline-text-3" id="text-2-11">
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Record can be built/destructed using a shortcut notation.
+   [let create x y = { x; y; }] is a shortcut for
+   [let create x y = { x = x; y = y; }].
+
+   Choose your field names wisely and unleash your inner procrastinator !
+ *)
+let create x y = { x; y; }
+
+let of_int myx myy = { x = float myx; y = float myy; } 
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val create : float -&gt; float -&gt; point_2d = &lt;fun&gt;
+val of_int : int -&gt; int -&gt; point_2d = &lt;fun&gt;
+</pre>
+</div>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="org2bd05e4"></a>Record size&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-11-1">
+<p>
+Records are limited to 2<sup>22</sup> − 1 fields (aka max <code>Array</code> size)
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+
+
+<div id="outline-container-orgd4e103f" class="outline-3">
+<h3 id="orgd4e103f"><span class="section-number-3">2.12</span> ADT &amp; pattern matching</h3>
+<div class="outline-text-3" id="text-2-12">
+</div>
+<ol class="org-ol">
+<li><a id="org8cf348b"></a>Exhustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-12-1">
+<p>
+Exhaustiveness and fragility of pattern-matchings are reported by default.
+</p>
+</div>
+</li>
+
+<li><a id="orgb3173c6"></a>Example ADT (continue in next slide)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-12-2">
+<div class="org-src-container">
+<pre class="src src-ocaml">type prop = (* inductively defined types do not need a rec keyword *)
+  | Pcst of bool
+  | Pvar of string
+  | Pand of prop * prop
+  | Por of prop * prop
+  | Pnot of prop
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-orgdd91b87" class="outline-3">
+<h3 id="orgdd91b87"><span class="section-number-3">2.13</span> Lack of exhaustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-13">
+<div class="org-src-container">
+<pre class="src src-ocaml">let free_variables =
+  (* The pattern matching in [loop] is well-typed but not exhaustive *)
+  let rec loop vars = function
+    | Pvar s -&gt; if List.mem s vars then vars else s :: vars
+    | Pand (p1, p2) -&gt;
+       let vars' = loop vars p1 in
+       loop vars' p2
+  in loop []
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">Line 3, characters 22-169:
+3 | ......................function
+4 |     | Pvar s -&gt; if List.mem s vars then vars else s :: vars
+5 |     | Pand (p1, p2) -&gt;
+6 |        let vars' = loop vars p1 in
+7 |        loop vars' p2
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(Pcst _|Por (_, _)|Pnot _)
+val free_variables : prop -&gt; string list = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge826e68" class="outline-3">
+<h3 id="orge826e68"><span class="section-number-3">2.14</span> Fragility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-14">
+<div class="org-src-container">
+<pre class="src src-ocaml">let free_variables =
+  (* Now it is exhaustive, but ... fragile *)
+  let rec loop vars = function
+    | Pvar s -&gt; if List.mem s vars then vars else s :: vars
+    | Pand (p1, p2) -&gt;
+       let vars' = loop vars p1 in loop vars' p2
+    | Por (p1, p2) -&gt;
+       let vars' = loop vars p1 in loop vars' p2
+    | Pnot p -&gt; loop vars p
+    (* fragile pattern-matching below.
+     * if a constructor is added, it is matched *)
+    | _ -&gt; vars
+  in loop []
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val free_variables : prop -&gt; string list = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org7f7b8fd" class="outline-3">
+<h3 id="org7f7b8fd"><span class="section-number-3">2.15</span> Or-patterns&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-15">
+<p>
+The compact solution for this function includes or-patterns.
+</p>
+<div class="org-src-container">
+<pre class="src src-ocaml">let free_variables =
+  let rec loop vars = function
+    | Pvar s -&gt; if List.mem s vars then vars else s :: vars
+    | Pand (p1, p2)
+    | Por (p1, p2) -&gt; (* 'or' pattern *)
+       let vars' = loop vars p1 in loop vars' p2
+    | Pnot p -&gt; loop vars p
+    | Pcst _ -&gt; vars (* non-fragile pattern-matching *)
+    (* When later adding [Bxor] constructor, the
+     * compiler will show me where pattern-matching
+     * is not exhaustive. *)
+  in loop []
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val free_variables : prop -&gt; string list = &lt;fun&gt;
+</pre>
+</div>
+
+
+<p>
+For (way) more: <a class='org-ref-reference' href="#LFeMar01">LFeMar01</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org574f2fa" class="outline-3">
+<h3 id="org574f2fa"><span class="section-number-3">2.16</span> Labels (aka named arguments)</h3>
+<div class="outline-text-3" id="text-2-16">
+<p>
+Named arguments are mainly used for 2 reasons:
+</p>
+<ul class="org-ul">
+<li>name-based disambiguation of same type parameters</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type 'a interval = { lo : 'a; hi : 'a } ;;
+let create ~lo ~hi = { lo; hi; } ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val create : lo:'a -&gt; hi:'a -&gt; 'a interval = &lt;fun&gt;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>homogeneous naming betting on programmers' procrastination</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Which version would you rather write? *)
+let lo = 1 and hi = 2 in create ~lo ~hi  ;;
+
+let lbd = 12 and ubd = 15 in create ~lo:lbd ~hi:ubd ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int interval = {lo = 12; hi = 15}
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org43c8723" class="outline-3">
+<h3 id="org43c8723"><span class="section-number-3">2.17</span> Optional arguments</h3>
+<div class="outline-text-3" id="text-2-17">
+<p>
+A special case of named arguments is optional arguments
+</p>
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Reusing type interval *)
+let create ?(lo=0) hi = { lo; hi; } ;;
+
+create 2 ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int interval = {lo = 0; hi = 2}
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let create ?(lo=0) ~hi () = { lo; hi; } ;;
+
+let ival = create ~hi:2 ();;
+
+(* The use of partial arguments complicate partial applications.*)
+let pp_ival ?(pre="(") ?(post=")") ?(sep=",") ppf { lo; hi; } =
+  Format.fprintf ppf "@[&lt;h&gt;%s%d%s%d%s@]" pre lo sep hi post ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val pp_ival :
+  ?pre:string -&gt;
+  ?post:string -&gt; ?sep:string -&gt; Format.formatter -&gt; int interval -&gt; unit =
+  &lt;fun&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* The following does not type *)
+Format.printf "%a@." pp_ival ival ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">Line 2, characters 21-28:
+2 | Format.printf "%a@." pp_ival ival ;;;;
+			 ^^^^^^^
+Error: This expression has type
+	 ?pre:string -&gt;
+	 ?post:string -&gt; ?sep:string -&gt; Format.formatter -&gt; interval -&gt; unit
+       but an expression was expected of type Format.formatter -&gt; 'a -&gt; unit
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* You need to create another function *)
+Format.printf "%a@." (fun ppf ival -&gt; pp_ival ppf ival) ival ;;
+
+(* The following does work though *)
+let pp_ival2 ppf = pp_ival ppf ;;
+Format.printf "%a@." pp_ival2 ival ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(0,2)
+- : unit = ()
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orge07ad32" class="outline-3">
+<h3 id="orge07ad32"><span class="section-number-3">2.18</span> Optional arguments <b>are</b> option types</h3>
+<div class="outline-text-3" id="text-2-18">
+<div class="org-src-container">
+<pre class="src src-ocaml">type ('a, 'b) return = {
+    value : 'a;
+    explanation : 'b option;
+  }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Optional arguments of a type ['a] are really ['a option] types and ce be
+ * used that way in the body of the function *)
+let create_return_value ?explanation value =
+  { value; explanation; }
+
+(* Now if you have a default value [v], [Some v] needs to be used. *)
+let create_defaulted_return_value ?(explanation="message") value =
+  { value; explanation = Some explanation; }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val create_return_value : ?explanation:'a -&gt; 'b -&gt; ('b, 'a) return = &lt;fun&gt;
+val create_defaulted_return_value :
+  ?explanation:string -&gt; 'a -&gt; ('a, string) return = &lt;fun&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* The construction below does not type. *)
+let create_defaulted_return_value ?(explanation="message") value =
+  { value; explanation; }
+</pre>
+</div>
+</div>
+
+<ol class="org-ol">
+<li><a id="org5aabe99"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-18-1">
+<p>
+Did not talk about option type since this is now a fairly common feature of
+most programming languages
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orgb51f470" class="outline-3">
+<h3 id="orgb51f470"><span class="section-number-3">2.19</span> Using named arguments in practice</h3>
+<div class="outline-text-3" id="text-2-19">
+<p>
+A commonly used recipe to construct function signatures which include named arguments is:
+</p>
+<ol class="org-ol">
+<li>Put your optional arguments (<code>?</code>)</li>
+<li>Put your named arguments (<code>~</code>)</li>
+<li>Put the rest of your arguments</li>
+</ol>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="org27bece8"></a>Example&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-19-1">
+<div class="org-src-container">
+<pre class="src src-ocaml">val create : ?lo:int -&gt; hi:int -&gt; unit -&gt; int interval
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-org195d07f" class="outline-3">
+<h3 id="org195d07f"><span class="section-number-3">2.20</span> Type-directed record disambiguation</h3>
+<div class="outline-text-3" id="text-2-20">
+<div class="org-src-container">
+<pre class="src src-ocaml">type fi_pair = { x : float; y : int; }
+
+(* Shadowing x and y *)
+type if_pair = { x : int; y : float; }
+
+let addall (v1:fi_pair) v2 =
+  let xsum = truncate v1.x + v2.x in
+  let ysum = v1.y + truncate v2.y in
+  xsum + ysum
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type fi_pair = { x : float; y : int; }
+type if_pair = { x : int; y : float; }
+val addall : fi_pair -&gt; if_pair -&gt; int = &lt;fun&gt;
+</pre>
+</div>
+
+
+<p>
+See <a class='org-ref-reference' href="#Sche12b">Sche12b</a>,<a class='org-ref-reference' href="#Sche12a">Sche12a</a>
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgfc42090" class="outline-2">
+<h2 id="orgfc42090"><span class="section-number-2">3</span> Imperative programming</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org708d4b1" class="outline-3">
+<h3 id="org708d4b1"><span class="section-number-3">3.1</span> It's ok to be impure</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+A bunch of OCaml primitive constructs are imperative.
+</p>
+
+<ul class="org-ul">
+<li>ref</li>
+<li>mutable field in records</li>
+<li>arrays</li>
+<li>hashtables</li>
+<li>bytes (aka strings before 4.02)</li>
+<li>stacks, queues, &#x2026;.</li>
+</ul>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="orgf97c6e2"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+No need to read Chris Okasaki <a class='org-ref-reference' href="#Oka98">Oka98</a> Purely Functional Data Structures to understand their implementation.
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-org6f04003" class="outline-3">
+<h3 id="org6f04003"><span class="section-number-3">3.2</span> The unit type</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+The type of sequence elements (think 'C statement') is <code>unit</code>, which is
+inhabited by a single value <code>()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let fact n =
+  let res = ref 1 in
+  for j = 2 to n do
+    res := !res * j; (* this assignment has type unit *)
+  done; (* The for loop too ! *)
+  !res
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val fact : int -&gt; int = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc137ccd" class="outline-3">
+<h3 id="orgc137ccd"><span class="section-number-3">3.3</span> What's in a reference?</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-ocaml">let x = ref 1
+
+let y : int Stdlib.ref = { contents = 12 }
+
+type 'a ref = { mutable contents : 'a }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val x : int Stdlib.ref = {Stdlib.contents = 13}
+val y : int Stdlib.ref = {Stdlib.contents = 14}
+type 'a ref = { mutable contents : 'a; }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let _ = x := 13; y := 14 ;;
+
+(!x, !y) ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int * int = (13, 14)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org4d16826" class="outline-3">
+<h3 id="org4d16826"><span class="section-number-3">3.4</span> Typical OCaml code</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Typical code mixes and matches functional and imperative features, usually
+for efficiency reasons. 
+</p>
+
+
+<p>
+You will not be castigated for doing so.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgf0a31e9" class="outline-3">
+<h3 id="orgf0a31e9"><span class="section-number-3">3.5</span> Cardinal</h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+<pre class="src src-ocaml">type 'a set = 'a list 
+
+let cardinal (l:'a set) =
+  let h = Hashtbl.create 7 in
+  let rec loop = function
+    | x :: xs -&gt;
+       Hashtbl.add h x (); (* Hashtbl.replace may be better here *)
+       loop xs
+    | [] -&gt;
+       Hashtbl.length h
+  in loop l
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type 'a set = 'a list
+val cardinal : 'a set -&gt; int = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb61165" class="outline-3">
+<h3 id="orgbb61165"><span class="section-number-3">3.6</span> String concatenation</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Concatenating the elements of a string list.
+ * Clearly not thread safe. *)
+let concat =
+  (* An OCaml [Buffer.t] is similar to a Java [StringBuffer].
+   * It is a self-growing array of bytes. *)
+  let b = Buffer.create 1024 in
+  fun ~sep l -&gt;
+  Buffer.reset b;    (* cleanup any previously written contents *)
+  List.iter (fun s -&gt; Buffer.add_string b s;
+		      Buffer.add_string b sep;) l;
+  Buffer.contents b
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val concat : sep:string -&gt; string list -&gt; string = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0f95930" class="outline-3">
+<h3 id="org0f95930"><span class="section-number-3">3.7</span> Trivia :: Hashtables</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+OCaml hashtables have an interesting property 
+</p>
+
+<div class="org-center">
+<p>
+<code>Hashtbl.add</code> does not remove old values!
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let h = Hashtbl.create 7 ;;
+Hashtbl.add h 1 2 ;;
+Hashtbl.add h 1 3 ;;
+Hashtbl.iter (fun k v -&gt; Format.printf "%d -&gt; %d@." k v) h ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">1 -&gt; 3
+1 -&gt; 2
+- : unit = ()
+</pre>
+</div>
+
+<div class="org-center">
+<p>
+Use <code>Hashtbl.replace</code> if you want substitution.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgb4e7eb0" class="outline-3">
+<h3 id="orgb4e7eb0"><span class="section-number-3">3.8</span> <code>;</code> Pitfall(s)</h3>
+<div class="outline-text-3" id="text-3-8">
+<div class="org-src-container">
+<pre class="src src-ocaml">(* This function is syntacticlly incorrect *)
+let test_and_print =
+  let count_success = ref 0 in
+  fun secret -&gt;
+  if secret = "you will never guess that" then
+    (* Uh oh *)
+    incr count_success; Format.printf "Success"
+  else Format.printf "Failure"
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">Line 8, characters 2-6:
+8 |   else Format.printf "Failure";;
+      ^^^^
+Error: Syntax error
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* This is correct *)
+let test_and_print =
+  let count_success = ref 0 in
+  fun secret -&gt;
+  if secret = "you will never guess that" then begin (* or ( *)
+      incr count_success; Format.printf "Success"
+    end (* or ) *)
+  else Format.printf "Failure"
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val test_and_print : string -&gt; unit = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb5e01e" class="outline-3">
+<h3 id="orgcb5e01e"><span class="section-number-3">3.9</span> Exceptions</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+Exceptions are <b>open</b> algebraic data types with a dedicated construct <code>exception</code>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">exception Empty_list 
+
+let nth i l =
+  assert (i &gt;= 0);
+  let rec aux j = function
+    | [] -&gt;
+       raise Empty_list
+    | x :: xs -&gt;
+       if j = 0 then x
+       else aux (j - 1) xs
+  in aux i l
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">exception Empty_list
+val nth : int -&gt; 'a list -&gt; 'a = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org5388a9c" class="outline-3">
+<h3 id="org5388a9c"><span class="section-number-3">3.10</span> Local exceptions</h3>
+<div class="outline-text-3" id="text-3-10">
+<div class="org-src-container">
+<pre class="src src-ocaml">(** [find p a] returns 
+ **  - [None] if no element of [a] verifies predicate [p]
+ **  - [Some e] otherwise where [e] is the first element of [a] s.t.
+ **    [p e = true ]
+ **)
+let find (type a) (p:a -&gt; bool) (arr:a array) =
+  let exception Found of a in
+  match Array.iter (fun e -&gt; if p e then raise (Found e)) arr with
+  | () -&gt; None
+  | exception (Found elt) -&gt; Some elt
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val find : ('a -&gt; bool) -&gt; 'a array -&gt; 'a option = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d8561c" class="outline-2">
+<h2 id="org7d8561c"><span class="section-number-2">4</span> More advanced topics</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgce4a279" class="outline-3">
+<h3 id="orgce4a279"><span class="section-number-3">4.1</span> What's a module?</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+The moment you have 2 files, you will be manipulating <b>modules</b>.
+</p>
+
+<p>
+A module is an abstraction barrier to bundle together related
+definitions and functionalities. In particular, it defines a namespace.
+</p>
+
+<p>
+A file defines a module: Both files <code>File</code> and <code>file</code> define module <code>File</code>.
+</p>
+
+<p>
+Inside a module, one can define other modules, <b>of course</b>.
+</p>
+
+<p>
+Modules can be recursive.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6ac8be9" class="outline-3">
+<h3 id="org6ac8be9"><span class="section-number-3">4.2</span> Interface (<b><code>mli</code></b>) &amp; implementation (<b><code>ml</code></b>)</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+<code>OCaml</code> programmers detach API interfaces (documentation,
+typing, &#x2026;) from their implementation in separate files
+</p>
+
+<p>
+Usage: Do <b>not</b> type every and all functions coded,just the exported
+ones and those whose type cannot be correctly inferred.
+</p>
+
+<p>
+So for a given file-based module
+</p>
+<ul class="org-ul">
+<li><code>mli</code> files contain interfaces (aka type signatures)</li>
+<li><code>ml</code>  files contain implementations</li>
+</ul>
+
+
+
+<p>
+For "programmatic" modules, you will use <code>module type</code> to abstract
+functionalities/traits and <code>module</code> for implementing said modules.
+</p>
+</div>
+
+<ol class="org-ol">
+<li><a id="org39c6370"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Think C headers/C separation but with checks, and a real module system.
+</p>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orgd4d4d91" class="outline-3">
+<h3 id="orgd4d4d91"><span class="section-number-3">4.3</span> <code>mli</code> &amp; <code>ml</code></h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<ol class="org-ol">
+<li><a id="orgff80763"></a>Implementation<br />
+<div class="outline-text-4" id="text-4-3-1">
+<div class="org-src-container">
+<pre class="src src-ocaml">type 'a set = 'a list
+let empty = []
+let singleton e = [e]
+let mem = List.mem
+let add e s = if mem e s then s else e :: s
+let union s1 s2 = List.fold_left (fun s e -&gt; add e s) s1 s2
+let intersection s1 s2 =
+  List.fold_left (fun s e -&gt; if mem e s1 then e :: s else s) [] s2
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="org1839946"></a>Interface<br />
+<div class="outline-text-4" id="text-4-3-2">
+<div class="org-src-container">
+<pre class="src src-ocaml">type 'a set
+val empty: 'a set
+val singleton : 'a -&gt; 'a set
+val mem: 'a -&gt; 'a set -&gt; bool
+val add: 'a -&gt; 'a set -&gt; 'a set
+val union: 'a set -&gt; 'a set -&gt; 'a set
+val intersection: 'a set -&gt; 'a set -&gt; 'a set
+</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div id="outline-container-org5e81dc0" class="outline-3">
+<h3 id="org5e81dc0"><span class="section-number-3">4.4</span> Levels of type abstraction&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-center">
+<p>
+Modules help to delimit abstraction barriers and one can choose the desired
+level of abstraction.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71f292c" class="outline-3">
+<h3 id="org71f292c"><span class="section-number-3">4.5</span> Open visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+Open types can be directly constructed &amp; destructed
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module Interval_concrete = struct
+  type t =
+  | Ival of { lo : int; hi : int; } (* here's an inline record *)
+  | Top
+
+  let top = Top 
+
+  let ival ~lo ~hi =
+    assert (lo &lt;= hi);
+    if lo = min_int &amp;&amp; hi = max_int then top
+    else Ival {lo; hi;}
+end
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">open Interval_concrete
+
+(* Pattern-matching is ok *)
+let size = function
+  | Ival {lo; hi; } -&gt; float @@ hi - lo + 1
+  | Top -&gt; infinity
+
+(* This is authorized. *)
+let interval = Top
+
+(* This is too
+ * the [top] function is part of the module signature *)
+let top2 = top
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgb9a8b88" class="outline-3">
+<h3 id="private_module"><span class="section-number-3">4.6</span> Private visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-private_module">
+<p>
+<b>Private types</b> can be:
+</p>
+<ul class="org-ul">
+<li>constructed only by predefined module-local functions,</li>
+<li><p>
+destructed by usual pattern matching.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module type IPRIVATE = sig
+  type t = private
+	  | Ival of { lo : int; hi: int;}
+	  | Top
+
+  val ival : lo:int -&gt; hi:int -&gt; t
+  val top : t
+end
+</pre>
+</div></li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module Interval_private : IPRIVATE = Interval_concrete
+
+open Interval_private
+
+(* Pattern-matching is ok on private types *)
+let size = function
+  | Ival {lo; hi; } -&gt; float @@ hi - lo + 1
+  | Top -&gt; infinity
+
+(* This is ok * the [top] function is part of
+ * the [IPRIVATE] module signature *)
+let top2 = top
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module Interval_private : IPRIVATE
+val size : Interval_private.t -&gt; float = &lt;fun&gt;
+val top2 : Interval_private.t = Interval_private.Top
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* This is not authorized. *)
+let interval = Top
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">Line 2, characters 15-18:
+2 | let interval = Top;;
+		   ^^^
+Error: Cannot create values of the private type Interval_private.t
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org99929f2" class="outline-3">
+<h3 id="org99929f2"><span class="section-number-3">4.7</span> Abstract visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-4-7">
+<p>
+<b>Abstract types</b> can be constructed &amp; destructed only be predefined functions
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module type IABSTRACT = sig
+  type t (* opaque to the outside world *)
+  val ival : lo:int -&gt; hi:int -&gt; t ;;
+  val top : t
+
+  (** Accessors needs to be in the interface now *)
+  val is_top : t -&gt; bool
+
+  (** Fails if value is [!top] *)
+  val lo : t -&gt; int
+  val hi : t -&gt; int
+end
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module Interval_abstract : IABSTRACT = struct
+  include Interval_concrete 
+
+  let is_top = function Top -&gt; true
+  | Ival _ -&gt; false
+
+   let lo = function
+   | Ival i -&gt; i.lo
+   | Top -&gt; assert false
+
+   let hi = function
+   | Ival i -&gt; i.hi
+   | Top -&gt; assert false
+end
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">open Interval_abstract
+
+(* Pattern-matching does not work anymore *)
+let size ival =
+  if is_top ival then infinity
+  else float @@ hi ival - lo ival + 1
+
+(* This is ok for the [top] function is part
+   of the module signature *)
+let top2 = top 
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val size : Interval_abstract.t -&gt; float = &lt;fun&gt;
+val top2 : Interval_abstract.t = &lt;abstr&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* This is still not authorized. *)
+let interval = Top 
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">Line 2, characters 15-18:
+2 | let interval = Top;;
+		   ^^^
+Error: Cannot create values of the private type Interval_private.t
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-orgccc2f03" class="outline-3">
+<h3 id="orgccc2f03"><span class="section-number-3">4.8</span> Genericity: let-polymorphism</h3>
+<div class="outline-text-3" id="text-4-8">
+<div class="org-src-container">
+<pre class="src src-ocaml">let rec length = function 
+  | [] -&gt; 0
+  | _ :: l' -&gt; 1 + length l'
+;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val length : 'a list -&gt; int = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf5e1d19" class="outline-3">
+<h3 id="orgf5e1d19"><span class="section-number-3">4.9</span> Genericity: Functors</h3>
+<div class="outline-text-3" id="text-4-9">
+<p>
+The standard library has functors for sets, maps (tree-based persistent
+dictionaries) and hashtables.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module type PRINTABLE = sig
+  type t
+  val pp: Format.formatter -&gt; t -&gt; unit
+end
+
+module List_printer(X:PRINTABLE) = struct
+  let pp_list
+	?(pre=(fun ppf () -&gt; Format.pp_print_string ppf "["))
+	?(post=(fun ppf () -&gt; Format.pp_print_string ppf "]"))
+	?(sep=(fun ppf () -&gt; Format.fprintf ppf ";@ "))
+	ppf l =
+    let open Format in
+    let rec loop = function
+      | [] -&gt; post ppf ()
+      | e :: es -&gt;
+	 begin
+	   X.pp ppf e;
+	   sep ppf ();
+	   loop es
+	 end
+    in pre ppf (); loop l
+end
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module Int_list_pp =
+  List_printer(struct type t = int let pp = Format.pp_print_int end)
+
+let pp_ilist ppf l = Int_list_pp.pp_list ppf l ;;
+pp_ilist Format.std_formatter [1;2;3]
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">[1; 2; 3;
+]- : unit = ()
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module String_list_pp =
+  List_printer(
+      struct 
+	type t = string 
+	let pp = Format.pp_print_string 
+      end)
+
+let pp_slist = fun ppf l -&gt; String_list_pp.pp_list ppf l;;
+Format.printf "@[&lt;h&gt;%a@]" pp_slist  ["foo"; "bar"; "bar";] ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">[foo; bar; bar; ]- : unit = ()
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcdcf4bf" class="outline-3">
+<h3 id="orgcdcf4bf"><span class="section-number-3">4.10</span> First-class modules</h3>
+<div class="outline-text-3" id="text-4-10">
+<p>
+Modules can also be used as "first-class" values.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">module type COMPARABLE = sig
+  type t
+  val compare : t -&gt; t -&gt; int
+end
+
+let lmax (type a) (module M:COMPARABLE with type t = a) (l:a list) =
+  let rec aux vmax l =
+    match l with
+    | [] -&gt; vmax
+    | x :: xs -&gt;
+       let vmax' =
+	 match vmax with
+	 | None -&gt; Some x
+	 | Some v -&gt; if M.compare x v &gt; 0 then Some x else vmax in
+       aux vmax' xs
+  in aux None l
+
+module Int = struct type t = int let compare = Stdlib.compare end ;;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org677eb2a" class="outline-3">
+<h3 id="org677eb2a"><span class="section-number-3">4.11</span> Using first-class module</h3>
+<div class="outline-text-3" id="text-4-11">
+<div class="org-src-container">
+<pre class="src src-ocaml">lmax (module Int) [1;2;3;] ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : Int.t option = Some 3
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Module [String] is part of the standard library *)
+lmax (module String) ["foo"; "bar"; "baz";] ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : String.t option = Some "foo"
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgfac3e1c" class="outline-3">
+<h3 id="orgfac3e1c"><span class="section-number-3">4.12</span> More involved example</h3>
+<div class="outline-text-3" id="text-4-12">
+<div class="org-src-container">
+<pre class="src src-ocaml">type ('var,'cst,'bop,'uop) expr =
+  | Var of 'var
+  | Cst of 'cst
+  | Bop of 'bop *
+	     ('var,'cst,'bop,'uop) expr *
+	       ('var,'cst,'bop,'uop) expr
+  | Uop of 'uop * ('var,'cst,'bop,'uop) expr
+
+module type EXPR = sig
+  type var
+  type uop
+  type cst
+  type bop
+end
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9d98df2" class="outline-3">
+<h3 id="org9d98df2"><span class="section-number-3">4.13</span> Defining an <code>EXPR</code> module</h3>
+<div class="outline-text-3" id="text-4-13">
+<div class="org-src-container">
+<pre class="src src-ocaml">module Bool: EXPR = struct
+  type bop =
+    | Band
+    | Bor
+    | Bxor
+
+  type uop = Bnot
+
+  type var = string
+
+  type cst = bool
+end
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgba85e76" class="outline-3">
+<h3 id="orgba85e76"><span class="section-number-3">4.14</span> Generic free variable computation</h3>
+<div class="outline-text-3" id="text-4-14">
+<div class="org-src-container">
+<pre class="src src-ocaml">let free_variables (type a b c d)
+      (module M:EXPR with type var = a and type cst = b and
+			  type bop = c and type uop = dl)
+      (e:(a,b,c,d) expr) : a list =
+  let module S =
+    Set.Make(struct type t = M.var let compare = Stdlib.compare end) in
+  let rec loop (set:S.t) = function
+    | Var v -&gt; S.add v set
+    | Cst _ -&gt; set
+    | Bop (_, e1, e2) -&gt; S.union (loop set e1) (loop S.empty e2)
+    | Uop (_, e) -&gt; loop set e
+  in
+  let set = loop S.empty e in
+  S.fold List.cons set []
+;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val free_variables :
+  (module EXPR with type bop = 'a and type cst = 'b and type uop = 'c and type var = 'd) -&gt;
+  ('d, 'b, 'a, 'c) expr -&gt; 'd list = &lt;fun&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">free_variables (module Bool) (Var "foo") ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : Bool.var list = ["foo"]
+</pre>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-org7fb4ae9" class="outline-3">
+<h3 id="org7fb4ae9"><span class="section-number-3">4.15</span> Monadic style programming</h3>
+<div class="outline-text-3" id="text-4-15">
+<p>
+The following type has been making a comeback.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type ('a, 'b) result =
+  | Ok of 'a
+  | Error of 'b
+</pre>
+</div>
+
+<p>
+and with it, monadic-style programming
+</p>
+
+<p>
+There is no dedicated notation (no <code>do</code>)for working inside monads.
+</p>
+
+<p>
+One usually directly luses the <code>M.bind</code> function of monad <code>M</code> or, define an infix
+operator (<code>&gt;&gt;=</code>)
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge6e0867" class="outline-3">
+<h3 id="orge6e0867"><span class="section-number-3">4.16</span> Option type, monadic style</h3>
+<div class="outline-text-3" id="text-4-16">
+<div class="org-src-container">
+<pre class="src src-ocaml">let (&gt;&gt;=) = Option.bind 
+
+let hd = function
+  | [] -&gt; None
+  | x :: _ -&gt; Some x
+
+let sum_heads l1 l2 =
+  hd l1 &gt;&gt;=
+    fun v1 -&gt; hd l2 &gt;&gt;=
+    fun v2 -&gt; v1 + v2 |&gt; Option.some
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val ( &gt;&gt;= ) : 'a option -&gt; ('a -&gt; 'b option) -&gt; 'b option = &lt;fun&gt;
+val hd : 'a list -&gt; 'a option = &lt;fun&gt;
+val sum_heads : int list -&gt; int list -&gt; int option = &lt;fun&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6561c84" class="outline-3">
+<h3 id="org6561c84"><span class="section-number-3">4.17</span> GADTs</h3>
+<div class="outline-text-3" id="text-4-17">
+<p>
+Generalized Abstract Data Types are available in <code>OCaml</code> since version
+<code>4.00</code> (<a class='org-ref-reference' href="#PotRG06POPL">PotRG06POPL</a>,<a class='org-ref-reference' href="#ProgGADTS">ProgGADTS</a>).
+</p>
+
+<p>
+They are sparsely used but can be pretty useful.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type _ bop =
+  | Add : int bop
+  | Mul : int bop
+  | Div : int bop
+  | Bor : bool bop
+  | Band : bool bop
+
+type _ uop =
+  | UMin : int uop
+  | Bnot : bool uop
+
+type comparison = Eq | Gt
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type _ typ =
+  | Int  : int -&gt; int typ
+  | Bool : bool -&gt; bool typ
+  | Ite  : bool typ * 'a typ * 'a typ -&gt; 'a typ
+  | Bin  : 'a bop * 'a typ * 'a typ -&gt; 'a typ
+  | Un   : 'a uop * 'a typ -&gt; 'a typ
+  | Cmp  : comparison * 'a typ * 'a typ -&gt; bool typ 
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let term = Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11)
+
+let term2 = 
+  Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), 
+       Bool true, Un (Bnot, Bool true)) ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val term : int typ = Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11)
+val term2 : bool typ =
+  Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), Bool true, Un (Bnot, Bool true))
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let eval_bop: type a. a bop -&gt; a -&gt; a -&gt; a = function
+  | Add -&gt; ( + ) 
+  | Mul -&gt; ( * ) 
+  | Div -&gt; ( / )
+  | Bor -&gt; ( || ) 
+  | Band -&gt; ( &amp;&amp; )
+
+let eval_cmp = function Eq -&gt; ( = ) | Gt -&gt; ( &gt; ) ;;
+
+let rec eval: type a. a typ -&gt; a  = function
+  | Int n -&gt; n
+  | Bool b -&gt; b
+  | Ite (b, csq, alt) -&gt; if eval b then eval csq else eval alt
+  | Bin (op, e1, e2) -&gt; eval_bop op (eval e1) (eval e2)
+  | Un (UMin, e) -&gt; - (eval e)
+  | Un (Bnot, e) -&gt; not (eval e)
+  | Cmp (op, e1, e2) -&gt; (eval_cmp op) (eval e1) (eval e2)
+  ;;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11) *)
+eval term  ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int = 11
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* let term2 = 
+ *   Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), 
+ *        Bool true, Un (Bnot, Bool true)) ;; *)
+
+eval term2 ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : bool = false
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf1790c9" class="outline-3">
+<h3 id="orgf1790c9"><span class="section-number-3">4.18</span> Death by GADTs</h3>
+<div class="outline-text-3" id="text-4-18">
+<p>
+With great expressiveness may come great unreadability ;-)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* in stdlib/camlinternalFormatBasics.ml *)
+and ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+     'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel =
+  | Char_ty :                                          (* %c  *)
+      ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel -&gt;
+      (char -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       char -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel
+  | String_ty :                                        (* %s  *)
+      ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel -&gt;
+      (string -&gt; 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+       string -&gt; 'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(* same file *)
+let rec erase_rel : type a b c d e f g h i j k l .
+  (a, b, c, d, e, f, g, h, i, j, k, l) fmtty_rel -&gt; 
+  (a, b, c, d, e, f) fmtty
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org11bcaa1" class="outline-3">
+<h3 id="org11bcaa1"><span class="section-number-3">4.19</span> <code>Format</code>'ing text</h3>
+<div class="outline-text-3" id="text-4-19">
+<p>
+The <code>Format</code> module is a pretty-printing facility
+available in the standard library with a <code>Printf</code>-like string format. 
+</p>
+
+<p>
+<code>Format</code> structures outputs using <b>boxes</b> and <b>break hints</b>.
+</p>
+
+<p>
+3 salient elements to think about
+</p>
+<ul class="org-ul">
+<li><code>Format.fprintf</code></li>
+<li>the <code>formatter</code> abstraction (one level above <code>output_channel</code>)</li>
+<li><code>%a</code> to chain pretty printers</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgcdffe3a" class="outline-3">
+<h3 id="orgcdffe3a"><span class="section-number-3">4.20</span> <code>Format</code> example</h3>
+<div class="outline-text-3" id="text-4-20">
+<div class="org-src-container">
+<pre class="src src-ocaml">module E = struct
+  type t =
+    | Int of int
+    | Add of t * t
+
+  let rec pp_expr ppf = function
+    | Int n -&gt; Format.fprintf ppf "%02d" n
+    | Add (e1, e2) -&gt;
+       Format.fprintf ppf "%a +@ %a" pp_expr e1 pp_expr e2
+end
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">let () =
+  let open E in
+  List.fold_left (fun e n -&gt; Add (Int n, e)) (Int 0) (1 |-&gt; 20)
+  |&gt;  Format.printf "@[&lt;hov&gt;%a@]@." pp_expr 
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">20 + 19 + 18 + 17 + 16 + 15 + 14 + 13 + 12 + 11 + 10 + 09 + 08 + 07 + 06 +
+05 + 04 + 03 + 02 + 01 + 00
+</pre>
+</div>
+
+<p>
+For more: <a class='org-ref-reference' href="#BonWeis18">BonWeis18</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orgd3e1774" class="outline-3">
+<h3 id="orgd3e1774"><span class="section-number-3">4.21</span> Polymorphic variants</h3>
+<div class="outline-text-3" id="text-4-21">
+<div class="org-src-container">
+<pre class="src src-ocaml">type const = [ `True | `False ]
+
+(* See e.g., https://en.wikipedia.org/wiki/NAND_logic *)
+let rec nandify = function
+  | #const as b -&gt; b
+  | `Bnot b -&gt;
+     let b' = nandify b in `Bnand (b', b')
+  | `Band (b1, b2) -&gt;
+     let b1 = nandify b1 and b2 = nandify b2 in
+     `Bnand (`Bnand (b1, b2), `Bnand (b1, b2))
+  | `Bnand (b1, b2) -&gt;
+     `Bnand(nandify b1, nandify b2)
+  | `Bor (b1, b2) -&gt;
+     let b1 = nandify b1 and b2 = nandify b2 in
+     `Bnand (`Bnand (b1, b1), `Bnand (b2, b2))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">type const = [ `False | `True ]
+val nandify :
+  ([&lt; `Band of 'a * 'a
+    | `Bnand of 'a * 'a
+    | `Bnot of 'a
+    | `Bor of 'a * 'a
+    | `False
+    | `True ]
+   as 'a) -&gt;
+  ([&gt; `Bnand of 'b * 'b | `False | `True ] as 'b) = &lt;fun&gt;
+</pre>
+</div>
+
+<p>
+See <a class='org-ref-reference' href="#Yak08">Yak08</a>,<a class='org-ref-reference' href="#JGar98">JGar98</a>,<a class='org-ref-reference' href="#JGar00">JGar00</a> 
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-orga4de5b6" class="outline-3">
+<h3 id="orga4de5b6"><span class="section-number-3">4.22</span> Things that I did not talk about</h3>
+<div class="outline-text-3" id="text-4-22">
+<ul class="org-ul">
+<li>Low-level representation <a class='org-ref-reference' href="#lowLevelOCaml">lowLevelOCaml</a></li>
+<li>Objects</li>
+<li>Laziness (<code>lazy</code> keyword, streams, &#x2026;, <code>Seq</code>) <a class='org-ref-reference' href="#OCamlManual">OCamlManual</a></li>
+<li>GC <a class='org-ref-reference' href="#bestFitGC">bestFitGC</a>,<a class='org-ref-reference' href="#GCRWOC">GCRWOC</a></li>
+<li>PPX syntax extensions (deriving, sexp, &#x2026;)</li>
+<li>FFI</li>
+<li>Ecosystem
+<ul class="org-ul">
+<li>parser generator: ocamlyacc, Menhir <a class='org-ref-reference' href="#Pot16">Pot16</a>,<a class='org-ref-reference' href="#PotRG06">PotRG06</a></li>
+<li>libraries</li>
+<li>&#x2026;</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7689831" class="outline-2">
+<h2 id="org7689831"><span class="section-number-2">5</span> Conclusion</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-org6ff0841" class="outline-3">
+<h3 id="org6ff0841"><span class="section-number-3">5.1</span> Give it a try</h3>
+<div class="outline-text-3" id="text-5-1">
+<div class="org-center">
+<p>
+\Huge  <code>OCaml</code>: a pragmatic functional language
+</p>
+</div>
+
+
+
+<div class="org-center">
+<p>
+Try it at <a href="https://ocaml.org/">https://ocaml.org/</a>
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgea8c52c" class="outline-3">
+<h3 id="orgea8c52c"><span class="section-number-3">5.2</span> Final remark</h3>
+<div class="outline-text-3" id="text-5-2">
+<blockquote>
+<p>
+With OCaml, you’re not learning the computer programming of the last 10 years, you’re learning the
+programming of the 10 coming years.
+</p>
+
+<p>
+&#x2013; 
+</p>
+
+<p>
+Sylvain Conchon 
+</p>
+
+<p>
+<a href="https://www.ocamlpro.com/2020/06/05/interview-sylvain-conchon-cso-on-formal-methods/">https://www.ocamlpro.com/2020/06/05/interview-sylvain-conchon-cso-on-formal-methods/</a>
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97e6b60" class="outline-2">
+<h2 id="org97e6b60"><span class="section-number-2">6</span> References&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span></h2>
+<div class="outline-text-2" id="text-6">
+<p>
+
+<h1 class='org-ref-bib-h1'>Bibliography</h1>
+<ul class='org-ref-bib'><li><a id="ClassicML">[ClassicML]</a> <a name="ClassicML"></a>Christoph Kreitz & Vincent Rahli, Introduction to Classic ML, <i></i>,  (2011). <a href="http://www.nuprl.org/software/eventml/KreitzandRahli-ClassicML.pdf">link</a>.</li>
+<li><a id="LFeMar01">[LFeMar01]</a> <a name="LFeMar01"></a>Le Fessant & Maranget, Optimizing Pattern Matching, <i>SIGPLAN Not.</i>, <b>36(10)</b>, 26–37 (2001). <a href="https://doi.org/10.1145/507669.507641">link</a>. <a href="http://dx.doi.org/10.1145/507669.507641">doi</a>.</li>
+<li><a id="Sche12b">[Sche12b]</a> <a name="Sche12b"></a>Gabriel Scherer, Resolving field names (part 2), <i></i>,  (2012). <a href="http://gallium.inria.fr/~scherer/gagallium/resolving-field-names-2/">link</a>.</li>
+<li><a id="Sche12a">[Sche12a]</a> <a name="Sche12a"></a>Gabriel Scherer, Resolving field names, <i></i>,  (2012). <a href="http://gallium.inria.fr/~scherer/gagallium/resolving-field-names/">link</a>.</li>
+<li><a id="Oka98">[Oka98]</a> <a name="Oka98"></a>Okasaki, Purely Functional Data Structures, Cambridge University Press (1998).</li>
+<li><a id="PotRG06POPL">[PotRG06POPL]</a> <a name="PotRG06POPL"></a>François Pottier & Yann Régis-Gianas, Stratified type inference for generalized algebraic  data types, 232-244, in in: ACM Symposium on Principles of Programming Languages
+                 (POPL), edited by (2006)</li>
+<li><a id="ProgGADTS">[ProgGADTS]</a> <a name="ProgGADTS"></a>Anil Madhavapeddy & Jeremy Yallop, Programming with GADTS, <i></i>,  (2014). <a href="https://www.cl.cam.ac.uk/teaching/1415/L28/gadts.pdf">link</a>.</li>
+<li><a id="BonWeis18">[BonWeis18]</a> <a name="BonWeis18"></a>Richard Bonichon & Pierre Weis, Format unraveled, <i>JFLA</i>,  (2018). <a href="https://hal.archives-ouvertes.fr/hal-01503081/file/format-unraveled.pdf">link</a>.</li>
+<li><a id="Yak08">[Yak08]</a> <a name="Yak08"></a>Boris Yakobowski, Le caractère ` à la rescousse: Factorisation et réutilisation de code grâce aux variants polymorphes, in in: JFLA, edited by (2008)</li>
+<li><a id="JGar98">[JGar98]</a> <a name="JGar98"></a>Jacques Garrigue, Programming with polymorphic variants, <i>ML Workshop</i>,  (1998). <a href="https://www.math.nagoya-u.ac.jp/~garrigue/papers/variants.pdf">link</a>.</li>
+<li><a id="JGar00">[JGar00]</a> <a name="JGar00"></a>Jacques Garrigue, Code reuse through polymorphic variants, <i>ML Workshop</i>,  (2000). <a href="https://www.math.nagoya-u.ac.jp/~garrigue/papers/variant-reuse.pdf">link</a>.</li>
+<li><a id="lowLevelOCaml">[lowLevelOCaml]</a> <a name="lowLevelOCaml"></a>Hickey, Madhavapeddy & Minsky, Memory representation of values, <i></i>,  (2014). <a href="http://dev.realworldocaml.org/runtime-memory-layout.html">link</a>.</li>
+<li><a id="OCamlManual">[OCamlManual]</a> <a name="OCamlManual"></a>Xavier Leroy, Damien Doligez, Alain Frisch, Jacques Garrigue, Didier RémyP & Jérôme Vouillon, The OCaml system release 4.10, <i></i>,  (2020). <a href="https://caml.inria.fr/pub/docs/manual-ocaml/">link</a>.</li>
+<li><a id="bestFitGC">[bestFitGC]</a> <a name="bestFitGC"></a>Thomas Blanc, OCaml new best fit GC, <i></i>,  (2020). <a href="https://www.ocamlpro.com/2020/03/23/ocaml-new-best-fit-garbage-collector/">link</a>.</li>
+<li><a id="GCRWOC">[GCRWOC]</a> <a name="GCRWOC"></a>Hickey, Madhavapeddy & Minsky, Understanding the Garbage Collector, <i></i>,  (2020). <a href="http://dev.realworldocaml.org/garbage-collector.html">link</a>.</li>
+<li><a id="Pot16">[Pot16]</a> <a name="Pot16"></a>François Pottier, Reachability and error diagnosis in LR(1) parsers, 88-98, in in: International Conference on Compiler Construction
+                 (CC), edited by (2016)</li>
+<li><a id="PotRG06">[PotRG06]</a> <a name="PotRG06"></a>François Pottier & Yann Régis-Gianas, Towards efficient, typed LR parsers, 155-180, in in: ACM Workshop on ML (ML), edited by (2006)</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 20200625</p>
+<p class="author">Author: Richard B.</p>
+<p class="date">Created: 2020-06-25 Thu 07:47</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

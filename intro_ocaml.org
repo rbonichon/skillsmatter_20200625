@@ -1,0 +1,1911 @@
+#+title: Introduction to OCaml
+#+date: 20200625
+#+options: H:2 toc:nil 
+#+PROPERTY: header-args:ocaml :cache yes :tangle "intro_ocaml.ml" :session :eval no-export :exports code 
+#+latex_class: beamer
+#+latex_class_options: [xcolor={svgnames}, hyperref={colorlinks,citecolor=twred,linkcolor=twviolet,urlcolor=twblue}]
+#+columns: %45ITEM %10BEAMER_env(Env) %10BEAMER_act(Act) %4BEAMER_col(Col) %8BEAMER_opt(Opt)
+#+beamer_frame_level: 2
+#+latex_header: \input{./header.tex}
+#+startup: beamer
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/setup/theme-readtheorg.setup
+
+#+name: setup-minted
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(("fontsize" "\\scriptsize")
+          ("linenos" "true")
+          ("numbersep" "1pt")
+          ("frame" "leftline")))
+  (setq org-latex-pdf-process
+        '(
+        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "bibtex %b"
+        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+#+end_src
+
+
+* Background
+** The Categorical Abstract Machine Language
+
+   
+   OCaml is part of the ML family, like SML (big brother) or F# (little brother).
+
+   - 1973 :: (classic) ML cite:ClassicML
+   - 1987-1992 :: Heavy CAML (LISP-based implementation)
+   - 1990-1991 :: Caml Light
+   - 1996 :: Objective Caml ~1.00~
+   - 2011 :: Objective Caml becomes OCaml
+   - 2020 :: OCaml ~4.10.0~ (Feb 21)
+
+*** History note                                                     :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+    
+    This history, as many, is not a linear progression some newish modern
+    features (for example the result type) were there in Heavy CAML but not in
+    initial OCaml releases
+
+** OCaml : an open-minded functional language
+
+   #+begin_center
+      OCaml is *not* a pure functional language 
+   #+end_center
+
+    #+begin_export latex
+    \vfill
+    #+end_export
+
+   - imperative programming is very much part of the nominal toolbox
+
+   - OOP too when it is the right fit.
+
+
+*** Standard library                                                 :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+    The standard library has been kept voluntarily small.
+
+
+    There have been various efforts to provide "batteries".
+
+
+** Bytecode and native code support
+
+   2 compilers for the price of one:
+   - ~ocamlc~ :: a bytecode compiler to a stack-based
+     - its interpreter ~ocamlrun~ works anywhere you have a C compiler
+   - ~ocamlopt~ :: a native code compiler 
+     - supports x86 (32/64), ARM (v5-v8), PowerPC (32/64) and ... SPARC !
+     - RISC-V will be in ~4.11~
+
+
+
+** Users
+
+   - Academic circles
+     - academia :: *INRIA*, Berkeley, CEA, CMU, UArizona, UPenn  
+     - SMEs :: OCamlPro/Origin Labs, Nomadic Labs, TrustInSoft, Tarides,
+   - Financial "institutions" -- Bloomberg, Jane Street, Lexifi, SimCorp
+   - Facebook (ReasonML, Infer)
+   - Atos, AbsInt
+   - Indirect users: Airbus (Astrée, Frama-C, Fluctuat), EDF, ...
+   - ... 
+   
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    Its french origin shows in the community. The financial application have
+    increased recently but Lexifi started 20 years ago (ICFP 2000)
+
+** Natural application fields 
+
+   - compilers
+   - program analysis
+   - theorem proving
+   - symbolic computations
+
+
+** Tooling (as of 2020)
+
+   - [[https://github.com/ocaml/ocaml][compiler]] :: last release is ~4.10~ (2020-02-21)
+   - [[https://github.com/ocaml/merlin][merlin]] :: context-sensitive completion for OCaml (in Vim, Emacs, VsCode, ...)
+
+        A *very* nice tool which has changed the life of most OCaml developers,
+        and it's editor-agnostic !
+   - [[https://github.com/ocaml/dune][dune]] :: newest contender in dedicated build systems
+
+     Subsumes ~OCamlMakefile~, ~omake~, ~ocamlbuild~.
+
+   - [[https://github.com/ocaml/opam][OPAM]] :: ~1.0~ in 2013, current is ~2.0.7~ (2020-04-21)
+
+        A source-based package manager for OCaml software.
+   - Emacs :: or another editor
+
+   #+begin_center
+   https://opam.ocaml.org/blog/turn-your-editor-into-an-ocaml-ide/
+   #+end_center
+
+
+
+* Building blocks
+** let-bindings
+  :PROPERTIES:
+  :ID:       3545110b-9a84-4116-bdfd-13a589216f74
+  :END:
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml :exports code
+     let add x y = x + y (* or let add = ( + ) *)
+#+end_src
+
+#+RESULTS[cf8b2ad2d4f13ae3b27b79ff7cd82cc0acdb3a1e]:
+#+begin_src ocaml :tangle no :results silent
+val add : int -> int -> int = <fun>
+#+end_src
+
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml :exports code
+     let simple_main () =
+       let x = read_int () in
+       let y = read_int () in
+       print_int (add x y);
+       print_newline ()
+   #+end_src
+
+   #+RESULTS[3401379c420f71eced1dbc2098d1bbf773cbe391]:
+   #+begin_src ocaml :tangle no :results silent
+   val simple_main : unit -> unit = <fun>
+   #+end_src
+
+
+   
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    Name bindings are introduced by ~let~. ~let .. in~ is a locally scoped binding.
+
+** Functions: curried by default 
+
+    Functions are *curried* (unlike SML functions).
+
+    ~add x y~ actually is ~(add(x))(y)~ 
+
+    ~add~ can be partially applied, as ~add x~.
+
+    #+begin_export latex
+    \vfill
+    #+end_export
+
+ #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+    #+begin_src ocaml :exports both :results value code    
+      let add1 = add 1 ;;
+
+      add1 2
+    #+end_src
+
+    #+RESULTS[1e211bb472902918cf78a0933660e46f413a8a62]:
+    #+begin_src ocaml :tangle no :results silent
+    - : int = 3
+    #+end_src
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+    Currying is taking a multiple argument functions and converting it to n
+    1-arg funs
+
+** Recursivity                                                       :B_note:
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :BEAMER_env: note
+   :END:
+
+   Recursive functions are explicitly qualified by the *rec* keyword.
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml 
+     (** [foldlf v l] is f ... (f (f v a0) a1) ... an)
+      ,** assuming [l] is [a0; a1; ...; an].
+      ,** [foldl] is sometimes called reduce ,*)
+     let rec foldl f acc = function
+       | [] -> acc
+       | x :: xs -> foldl f (f acc x) xs ;;
+#+end_src
+
+#+RESULTS[f9fc593cdc8212b306377cf0af7b55105e90f39d]:
+#+begin_src ocaml :tangle no
+val foldl : ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a = <fun>
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+  foldl (+) 0 [1;2;3;4]  ;;
+   #+end_src
+
+   #+RESULTS[dd28221ad187c17ca50a62994e1d8a32e7ea8d0d]:
+   #+begin_src ocaml :tangle no
+   - : int = 10
+   #+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     (** [( |-> ) n m] is an infix operator computing
+      ,** the list of elements from [n] included to [m] included. *)
+       let ( |-> ) lo hi  =
+         let rec loop acc n =
+           if n > hi then List.rev acc
+           else loop (n :: acc) (n + 1) in
+         loop [] lo
+       ;;
+#+end_src
+
+#+RESULTS[57c407b1d8ca0f94b5407accfa8ee276a55c72b3]:
+#+begin_src ocaml :tangle no :results silent
+val ( |-> ) : int -> int -> int list = <fun>
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+BEGIN_SRC ocaml 
+   1 |-> 10 ;;
+#+END_SRC
+
+#+RESULTS[fe9c01c185fe1f40c59bb44a7f3a5405c5a79fc3]:
+#+begin_src ocaml :tangle no
+- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+#+end_src
+
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    - We can define functions inside functions
+    - We'll see later that closures (reference to outer env) are done automatically
+    - The pattern inside is very common to get tail-recursion (accumulate then reverse)
+
+** Corollary 
+
+   #+begin_center
+      Functions are *not recursive* by default.
+   #+end_center
+
+#+begin_export latex
+    \vfill
+#+end_export
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     (* This second declaration hides the first.*)
+     let ( |-> ) lo hi =
+       assert (hi >= lo);
+       lo |-> hi
+   #+end_src
+
+   #+RESULTS[2dc0f101a9d87a7eb7324bd54e4913a1efb3ebdc]:
+   #+begin_src ocaml :tangle no
+   val ( |-> ) : int -> int -> int list = <fun>
+   #+end_src
+
+   
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    Assertions are checked at runtime and trigger (catchable) exceptions
+
+    ~-noassert~ do not compile time, except the ~assert false~ special form.
+    
+** Functions are first-class citizens
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml 
+     (** [max cmp l] computes the maximun element of a list [l] provided a [cmp]
+      ,** function conforming to the following specification:
+      ,** - cmp x y = 0 if x is equivalent to y
+      ,** - cmp x y > 0 if x is bigger than y
+      ,** - cmp x y < 0 if x if smaller than y **)
+     let max cmp l =
+       let rec loop vmax = function
+         | [] -> vmax
+         | x :: xs ->
+            let vmax' =
+              match vmax with
+              | None -> Some x
+              | Some y -> if cmp x y > 0 then Some x else vmax in
+            loop vmax' xs
+       in loop None l
+     ;;
+#+end_src
+
+#+RESULTS[26fb4adf7dfc6d5c12a9ccca43f3fb41393ca2e4]:
+#+begin_src ocaml :tangle no
+val max : ('a -> 'a -> int) -> 'a list -> 'a option = <fun>
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     max Stdlib.compare [1; 2; 3;] ;;
+#+end_src
+
+#+RESULTS[5e26a9aa9386795552d939eebac4d17064e5df4e]:
+#+begin_src ocaml :tangle no
+- : int option = Some 3
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     (* We just hid [Stdlib.max] behind another definition !*)
+     Stdlib.max ;;
+   #+end_src
+
+   #+RESULTS[f39c59c9fa4feb7ab6429347373bd86809ba54da]:
+   #+begin_src ocaml :tangle no
+   - : 'a -> 'a -> 'a = <fun>
+   #+end_src
+
+** Evaluation is strict
+
+   Laziness (call-by-name / call-by-need) is not the default evaluation mode. 
+
+   OCaml is said to be *strict* (call-by-value).
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     let double x = print_int x; 2 * x ;;
+
+     (* We forgot to use x ... *)
+     let dadd _x y =
+       let x' = double y
+       and y' = double y in
+       (* Infix operators are prefixed ones that are treated specially
+          by the parser. Have fun and create your owns. *)
+       ( + ) x' y' ;;
+
+     dadd (double 1) (double 2) ;;
+   #+end_src
+
+   #+RESULTS[f91673dcceea5e227d35535d21876d86563b8379]:
+   #+begin_src ocaml :tangle no :results silent
+   2144- : int = 16
+   #+end_src
+
+   ... well except for binary Boolean operators -- of course ;-).
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    We see not only that all arguments are evaluated (even unused ones), but
+    that ~double y~ is evaluated twice. Not much optimization is done by default.
+
+    The ~_~ prefix notation avoid unused variable warning
+
+** Evaluation Oddity
+
+   Evaluation order for function arguments is *unspecified*.
+   #+begin_export latex
+   \vfill
+   #+end_export
+
+   It is usually right-to-left, as exemplified by the snippet below.
+#+begin_export latex
+   \vfill
+#+end_export
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+BEGIN_SRC ocaml 
+      add (print_string "foo!"; 1) (print_string "bar!"; 2) ;;
+    #+END_SRC
+
+    #+RESULTS[e0cefad8ff434d146fc633299247e902206549bc]:
+    #+begin_src ocaml :tangle no
+    bar!foo!- : int = 3
+    #+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+    #+BEGIN_SRC ocaml 
+    ( || ) (print_string "foo!"; false) (print_string "bar!"; true) ;;
+    #+END_SRC
+
+    #+RESULTS[e49d42ffb9c269bcdfe477f5f8c994821c0e4d1a]:
+    #+begin_src ocaml :tangle no :results silent
+    foo!bar!- : bool = true
+    #+end_src
+
+
+** Grouping information : Tuples                               :proofreading:
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+    #+begin_src ocaml
+    let a = 1, 2 in
+    let x, y = a in
+    x + y
+    ;;
+    #+end_src
+
+    #+RESULTS[0a7af5d446d960b800f710ed7155f44fd7a06221]:
+    #+begin_src ocaml :tangle no
+    - : int = 3
+    #+end_src
+
+    can also be written with ~( .. )~ as
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+    #+begin_src ocaml
+    let a = (1, 2) in
+    let (x, y) = a in
+    x + y
+    ;;
+    #+end_src
+
+    #+RESULTS[8978aa27db4cb167c30126b94d0a53a48dd5b546]:
+    #+begin_src ocaml :tangle no
+    - : int = 3
+    #+end_src
+
+
+
+** Everything is a pattern
+
+#+header: :session :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml 
+     let create x y z = x, y, z
+
+     (* FP arithmetic operations have a dedicated syntax *)
+     let square a = a *. a
+
+     let dist (x1, y1, z1) p =
+       let x2, y2, z2 = p in
+       let xdiff = x2 -. x1
+       and ydiff = y2 -. y1
+       and zdiff = z2 -. z1 in
+       square xdiff +. square ydiff +. square zdiff |> sqrt
+#+end_src
+
+#+RESULTS[87ed9f846fa77c27d83c3e42972073bed465596c]:
+#+begin_src ocaml :tangle no :results silent
+val dist : float * float * float -> float * float * float -> float = <fun>
+#+end_src
+
+
+** ~dist~: another version 
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     let dist p1 p2 =
+       match p1, p2 with
+       (* The | can also be used as a separator instead of as a starting
+          annotation. *)
+       | (x1, y1, z1), (x2, y2, z2) ->
+          let xdiff = x2 -. x1
+          and ydiff = y2 -. y1
+          and zdiff = z2 -. z1 in
+          sqrt @@ square xdiff +. square ydiff +. square zdiff
+   #+end_src
+
+   #+RESULTS[9aa5e4adcd683b77ac08026ac518882eb9b04cd7]:
+   #+begin_src ocaml :tangle no :results silent
+   val dist : float * float * float -> float * float * float -> float = <fun>
+   #+end_src
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    I've deliberately used ~@@~ instead of ~|>~ to show yet another infix operator
+
+** Grouping information : Records (aka named tuples)
+
+#+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml :session
+     type point_2d = { x : float; y: float; }  ;;
+
+     (* C-like . notations for field access *)
+     let dist p1 p2 =
+       let xdiff = p1.x -. p2.x
+       and ydiff = p1.y -. p2.y in
+       sqrt (xdiff *. xdiff +. ydiff *. ydiff)
+     #+end_src
+
+     #+RESULTS[1d6dc6f8b062d5b6f0aeb8d35e7a1f450ce7f43b]:
+     #+begin_src ocaml :tangle no :results silent
+     val dist : point_2d -> point_2d -> float = <fun>
+     #+end_src
+     
+     #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+     #+begin_src ocaml :session
+     (* Using pattern-matching *)
+     let dist p1 p2 =
+       match p1, p2 with
+       | { x; y; }, { x = x'; y = y';} ->
+          let xdiff = x -. x'
+          and ydiff = y -. y' in
+          sqrt (xdiff *. xdiff +. ydiff *. ydiff)
+#+end_src
+
+#+RESULTS[043b43f00bf8906df869271c5bdc3adffe5f1ca7]:
+#+begin_src ocaml :tangle no :results silent
+val dist : point_2d -> point_2d -> float = <fun>
+#+end_src
+
+** Building / destructing records 
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml :session
+     (* Record can be built/destructed using a shortcut notation.
+        [let create x y = { x; y; }] is a shortcut for
+        [let create x y = { x = x; y = y; }].
+
+        Choose your field names wisely and unleash your inner procrastinator !
+      *)
+     let create x y = { x; y; }
+
+     let of_int myx myy = { x = float myx; y = float myy; } 
+   #+end_src
+
+   #+RESULTS[bacb45036ea5e01b277a639f88cf83255cc47471]:
+   #+begin_src ocaml :tangle no :results silent
+   val create : float -> float -> point_2d = <fun>
+   val of_int : int -> int -> point_2d = <fun>
+   #+end_src
+
+
+*** Record size                                             :B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :END:
+
+    Records are limited to 2^{22} − 1 fields (aka max ~Array~ size)
+
+
+
+** ADT & pattern matching
+
+*** Exhustiveness                                           :B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :END:
+     Exhaustiveness and fragility of pattern-matchings are reported by default.
+
+*** Example ADT (continue in next slide)                    :B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :END:
+
+     #+begin_src ocaml :exports code :results silent
+       type prop = (* inductively defined types do not need a rec keyword *)
+         | Pcst of bool
+         | Pvar of string
+         | Pand of prop * prop
+         | Por of prop * prop
+         | Pnot of prop
+  #+end_src
+
+   
+** Lack of exhaustiveness                                           :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+
+      #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     let free_variables =
+       (* The pattern matching in [loop] is well-typed but not exhaustive *)
+       let rec loop vars = function
+         | Pvar s -> if List.mem s vars then vars else s :: vars
+         | Pand (p1, p2) ->
+            let vars' = loop vars p1 in
+            loop vars' p2
+       in loop []
+#+end_src
+
+#+RESULTS[296f766047e7dd3276d348fadc5efb673e2aaadf]:
+#+begin_src ocaml :tangle no :results silent
+Line 3, characters 22-169:
+3 | ......................function
+4 |     | Pvar s -> if List.mem s vars then vars else s :: vars
+5 |     | Pand (p1, p2) ->
+6 |        let vars' = loop vars p1 in
+7 |        loop vars' p2
+Warning 8: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(Pcst _|Por (_, _)|Pnot _)
+val free_variables : prop -> string list = <fun>
+#+end_src
+
+** Fragility                                                        :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+
+  #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+    let free_variables =
+      (* Now it is exhaustive, but ... fragile *)
+      let rec loop vars = function
+        | Pvar s -> if List.mem s vars then vars else s :: vars
+        | Pand (p1, p2) ->
+           let vars' = loop vars p1 in loop vars' p2
+        | Por (p1, p2) ->
+           let vars' = loop vars p1 in loop vars' p2
+        | Pnot p -> loop vars p
+        (* fragile pattern-matching below.
+         ,* if a constructor is added, it is matched *)
+        | _ -> vars
+      in loop []
+#+end_src
+
+#+RESULTS[f84bb1bf535ca25ea10bab191d9cb3cfbe889e9f]:
+#+begin_src ocaml :tangle no :results silent
+val free_variables : prop -> string list = <fun>
+#+end_src
+
+
+** Or-patterns                                                      :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+   The compact solution for this function includes or-patterns.
+  #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     let free_variables =
+       let rec loop vars = function
+         | Pvar s -> if List.mem s vars then vars else s :: vars
+         | Pand (p1, p2)
+         | Por (p1, p2) -> (* 'or' pattern *)
+            let vars' = loop vars p1 in loop vars' p2
+         | Pnot p -> loop vars p
+         | Pcst _ -> vars (* non-fragile pattern-matching *)
+         (* When later adding [Bxor] constructor, the
+          * compiler will show me where pattern-matching
+          * is not exhaustive. *)
+       in loop []
+   #+end_src
+
+   #+RESULTS[950aa29cdc2f77d91a6920bd3568241e1e1f38da]:
+   #+begin_src ocaml :tangle no :results silent
+   val free_variables : prop -> string list = <fun>
+   #+end_src
+
+
+   For (way) more: cite:LFeMar01
+
+
+** Labels (aka named arguments)
+
+   Named arguments are mainly used for 2 reasons:
+   - name-based disambiguation of same type parameters
+
+   #+header: :session :exports both :results value code :results_switches ":tangle no :results silent"
+     #+begin_src ocaml
+     type 'a interval = { lo : 'a; hi : 'a } ;;
+     let create ~lo ~hi = { lo; hi; } ;;
+     #+end_src
+
+     #+RESULTS[094e001f8cf42a652461301e310996f464e91dff]:
+     #+begin_src ocaml :tangle no :results silent
+     val create : lo:'a -> hi:'a -> 'a interval = <fun>
+     #+end_src
+
+   - homogeneous naming betting on programmers' procrastination
+
+   #+header: :exports both :results value code :results_switches ":tangle no "
+     #+begin_src ocaml :session
+     (* Which version would you rather write? *)
+     let lo = 1 and hi = 2 in create ~lo ~hi  ;;
+
+     let lbd = 12 and ubd = 15 in create ~lo:lbd ~hi:ubd ;;
+     #+end_src
+
+     #+RESULTS[0f16719196b72ce3512276bdf89d595b3b7039be]:
+     #+begin_src ocaml :tangle no 
+     - : int interval = {lo = 12; hi = 15}
+     #+end_src
+
+
+
+** Optional arguments
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   A special case of named arguments is optional arguments
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+     #+begin_src ocaml
+       (* Reusing type interval *)
+       let create ?(lo=0) hi = { lo; hi; } ;;
+
+       create 2 ;;
+#+end_src
+
+#+RESULTS[fc609c5aba7c60c460a77d444a415c6c73cd9f57]:
+#+begin_src ocaml :tangle no :results silent
+- : int interval = {lo = 0; hi = 2}
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml :exports code 
+     let create ?(lo=0) ~hi () = { lo; hi; } ;;
+
+     let ival = create ~hi:2 ();;
+
+     (* The use of partial arguments complicate partial applications.*)
+     let pp_ival ?(pre="(") ?(post=")") ?(sep=",") ppf { lo; hi; } =
+       Format.fprintf ppf "@[<h>%s%d%s%d%s@]" pre lo sep hi post ;;
+#+end_src
+
+#+RESULTS[f5aaa9f85824591ff236a13209cf79e9da3a8f3f]:
+#+begin_src ocaml :tangle no :results silent
+val pp_ival :
+  ?pre:string ->
+  ?post:string -> ?sep:string -> Format.formatter -> int interval -> unit =
+  <fun>
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml :tangle no
+       (* The following does not type *)
+       Format.printf "%a@." pp_ival ival ;;
+#+end_src
+
+#+RESULTS[df57cae08c422e041da52f7803c9aeaee6c6bfc8]:
+#+begin_src ocaml :tangle no
+Line 2, characters 21-28:
+2 | Format.printf "%a@." pp_ival ival ;;;;
+                         ^^^^^^^
+Error: This expression has type
+         ?pre:string ->
+         ?post:string -> ?sep:string -> Format.formatter -> interval -> unit
+       but an expression was expected of type Format.formatter -> 'a -> unit
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+       (* You need to create another function *)
+       Format.printf "%a@." (fun ppf ival -> pp_ival ppf ival) ival ;;
+
+       (* The following does work though *)
+       let pp_ival2 ppf = pp_ival ppf ;;
+       Format.printf "%a@." pp_ival2 ival ;;
+     #+end_src
+
+     #+RESULTS[b5db48b9d3633fb9e59fbca80cbc18fde8ef3e69]:
+     #+begin_src ocaml :tangle no
+     (0,2)
+     - : unit = ()
+     #+end_src
+
+
+
+** Optional arguments *are* option types
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+
+   #+begin_src ocaml 
+     type ('a, 'b) return = {
+         value : 'a;
+         explanation : 'b option;
+       }
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     (* Optional arguments of a type ['a] are really ['a option] types and ce be
+      ,* used that way in the body of the function *)
+     let create_return_value ?explanation value =
+       { value; explanation; }
+
+     (* Now if you have a default value [v], [Some v] needs to be used. *)
+     let create_defaulted_return_value ?(explanation="message") value =
+       { value; explanation = Some explanation; }
+#+end_src
+
+#+RESULTS[9686bb655f790f2f35cf7ba33f438e58d2b098de]:
+#+begin_src ocaml :tangle no :results silent
+val create_return_value : ?explanation:'a -> 'b -> ('b, 'a) return = <fun>
+val create_defaulted_return_value :
+  ?explanation:string -> 'a -> ('a, string) return = <fun>
+#+end_src
+
+
+#+begin_src ocaml :tangle no :results value code :results_switches ":tangle no :results silent"
+     (* The construction below does not type. *)
+     let create_defaulted_return_value ?(explanation="message") value =
+       { value; explanation; }
+   #+end_src
+
+   #+RESULTS[8e2b1a907bd6cd9e423ec3a654c2248a5514f7de]:
+   #+begin_src ocaml :tangle no :results silent
+   Line 3, characters 11-22:
+   3 |   { value; explanation; };;
+                  ^^^^^^^^^^^
+   Error: This expression has type string but an expression was expected of type
+            'a option
+   #+end_src
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    Did not talk about option type since this is now a fairly common feature of
+    most programming languages
+
+** Using named arguments in practice
+
+    A commonly used recipe to construct function signatures which include named arguments is:
+    1. Put your optional arguments (~?~)
+    2. Put your named arguments (=~=)
+    3. Put the rest of your arguments
+
+
+*** Example                                                 :B_ignoreheading:
+    :PROPERTIES:
+    :BEAMER_env: ignoreheading
+    :END:
+        #+BEGIN_SRC ocaml :tangle no :results silent
+        val create : ?lo:int -> hi:int -> unit -> int interval
+        #+END_SRC
+
+    
+** Type-directed record disambiguation
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     type fi_pair = { x : float; y : int; }
+
+     (* Shadowing x and y *)
+     type if_pair = { x : int; y : float; }
+
+     let addall (v1:fi_pair) v2 =
+       let xsum = truncate v1.x + v2.x in
+       let ysum = v1.y + truncate v2.y in
+       xsum + ysum
+   #+end_src
+
+   #+RESULTS[24fd637ef16c8d14c2ed42f03220abba3a92a252]:
+   #+begin_src ocaml :tangle no :results silent
+   type fi_pair = { x : float; y : int; }
+   type if_pair = { x : int; y : float; }
+   val addall : fi_pair -> if_pair -> int = <fun>
+   #+end_src
+
+
+   See cite:Sche12b,Sche12a
+
+
+
+* Imperative programming
+
+** It's ok to be impure
+
+   A bunch of OCaml primitive constructs are imperative.
+
+   - ref
+   - mutable field in records
+   - arrays
+   - hashtables
+   - bytes (aka strings before 4.02)
+   - stacks, queues, ....
+
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+    No need to read Chris Okasaki cite:Oka98 Purely Functional Data Structures to understand their implementation.
+
+
+** The unit type
+
+   The type of sequence elements (think 'C statement') is ~unit~, which is
+   inhabited by a single value ~()~.
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     let fact n =
+       let res = ref 1 in
+       for j = 2 to n do
+         res := !res * j; (* this assignment has type unit *)
+       done; (* The for loop too ! *)
+       !res
+   #+end_src
+
+   #+RESULTS[5ab309b7958cb0d34f0b2f7e84197d6dfa5b3bf2]:
+   #+begin_src ocaml :tangle no :results silent
+   val fact : int -> int = <fun>
+   #+end_src
+
+** What's in a reference?
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     let x = ref 1
+
+     let y : int Stdlib.ref = { contents = 12 }
+
+     type 'a ref = { mutable contents : 'a }
+   #+end_src
+
+   #+RESULTS[c395d35126c62afdd7f074ac79071bdf548b9ba5]:
+   #+begin_src ocaml :tangle no :results silent
+   val x : int Stdlib.ref = {Stdlib.contents = 13}
+   val y : int Stdlib.ref = {Stdlib.contents = 14}
+   type 'a ref = { mutable contents : 'a; }
+   #+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+BEGIN_SRC ocaml
+    let _ = x := 13; y := 14 ;;
+
+    (!x, !y) ;;
+   #+END_SRC
+
+   #+RESULTS[9b4a4e64e02b1e9c383509e1430b614d1bdb8bc4]:
+   #+begin_src ocaml :tangle no :results silent
+   - : int * int = (13, 14)
+   #+end_src
+
+
+** Typical OCaml code
+
+   Typical code mixes and matches functional and imperative features, usually
+   for efficiency reasons. 
+
+
+   You will not be castigated for doing so.
+
+
+** Cardinal
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+  #+BEGIN_SRC ocaml
+     type 'a set = 'a list 
+
+     let cardinal (l:'a set) =
+       let h = Hashtbl.create 7 in
+       let rec loop = function
+         | x :: xs ->
+            Hashtbl.add h x (); (* Hashtbl.replace may be better here *)
+            loop xs
+         | [] ->
+            Hashtbl.length h
+       in loop l
+#+END_SRC
+
+#+RESULTS[9212c11a96f6f43127cd7a90b9dad07e6ff37fa2]:
+#+begin_src ocaml :tangle no :results silent
+type 'a set = 'a list
+val cardinal : 'a set -> int = <fun>
+#+end_src
+
+** String concatenation
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+BEGIN_SRC ocaml
+     (* Concatenating the elements of a string list.
+      ,* Clearly not thread safe. *)
+     let concat =
+       (* An OCaml [Buffer.t] is similar to a Java [StringBuffer].
+        ,* It is a self-growing array of bytes. *)
+       let b = Buffer.create 1024 in
+       fun ~sep l ->
+       Buffer.reset b;    (* cleanup any previously written contents *)
+       List.iter (fun s -> Buffer.add_string b s;
+                           Buffer.add_string b sep;) l;
+       Buffer.contents b
+  #+END_SRC
+
+  #+RESULTS[281f2f349b4f306329cf697224c758520f155024]:
+  #+begin_src ocaml :tangle no :results silent
+  val concat : sep:string -> string list -> string = <fun>
+  #+end_src
+
+
+** Trivia :: Hashtables
+
+   OCaml hashtables have an interesting property 
+
+   #+begin_center
+   ~Hashtbl.add~ does not remove old values!
+   #+end_center
+   
+   #+begin_export latex
+   \vfill
+   #+end_export
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml :results output
+     let h = Hashtbl.create 7 ;;
+     Hashtbl.add h 1 2 ;;
+     Hashtbl.add h 1 3 ;;
+     Hashtbl.iter (fun k v -> Format.printf "%d -> %d@." k v) h ;;
+   #+end_src
+
+   #+RESULTS[84d8b93a38037b19afcbca3828a9d7522c060a5f]:
+   #+begin_src ocaml :tangle no :results silent
+   1 -> 3
+   1 -> 2
+   - : unit = ()
+   #+end_src
+
+   #+begin_center
+      Use ~Hashtbl.replace~ if you want substitution.
+   #+end_center
+
+
+** ~;~ Pitfall(s)
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+  #+begin_src ocaml :tangle no
+    (* This function is syntacticlly incorrect *)
+    let test_and_print =
+      let count_success = ref 0 in
+      fun secret ->
+      if secret = "you will never guess that" then
+        (* Uh oh *)
+        incr count_success; Format.printf "Success"
+      else Format.printf "Failure"
+#+end_src
+
+#+RESULTS[edb94f2e135851e0a7c8893daf4833387a3457cb]:
+#+begin_src ocaml :tangle no :results silent
+Line 8, characters 2-6:
+8 |   else Format.printf "Failure";;
+      ^^^^
+Error: Syntax error
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+    (* This is correct *)
+    let test_and_print =
+      let count_success = ref 0 in
+      fun secret ->
+      if secret = "you will never guess that" then begin (* or ( *)
+          incr count_success; Format.printf "Success"
+        end (* or ) *)
+      else Format.printf "Failure"
+  #+end_src
+
+  #+RESULTS[5e1512c328087472dd911c9b8eec630a0927879c]:
+  #+begin_src ocaml :tangle no :results silent
+  val test_and_print : string -> unit = <fun>
+  #+end_src
+
+** Exceptions
+
+   Exceptions are *open* algebraic data types with a dedicated construct ~exception~
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     exception Empty_list 
+
+     let nth i l =
+       assert (i >= 0);
+       let rec aux j = function
+         | [] ->
+            raise Empty_list
+         | x :: xs ->
+            if j = 0 then x
+            else aux (j - 1) xs
+       in aux i l
+   #+end_src
+
+   #+RESULTS[1a16128d0bc42ec739ecf3c1a9698d9ef08905ea]:
+   #+begin_src ocaml :tangle no :results silent
+   exception Empty_list
+   val nth : int -> 'a list -> 'a = <fun>
+   #+end_src
+
+
+
+** Local exceptions
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+begin_src ocaml
+     (** [find p a] returns 
+      ,**  - [None] if no element of [a] verifies predicate [p]
+      ,**  - [Some e] otherwise where [e] is the first element of [a] s.t.
+      ,**    [p e = true ]
+      ,**)
+     let find (type a) (p:a -> bool) (arr:a array) =
+       let exception Found of a in
+       match Array.iter (fun e -> if p e then raise (Found e)) arr with
+       | () -> None
+       | exception (Found elt) -> Some elt
+   #+end_src
+
+   #+RESULTS[3a92ce4ad7ae0189232baff383a81e71d00248df]:
+   #+begin_src ocaml :tangle no :results silent
+   val find : ('a -> bool) -> 'a array -> 'a option = <fun>
+   #+end_src
+
+*** Annotation                                                       :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    The ~type a~ type annotation is needed to properly generalize the exception type
+
+* More advanced topics
+
+** What's a module?
+
+   The moment you have 2 files, you will be manipulating *modules*.
+
+   A module is an abstraction barrier to bundle together related
+   definitions and functionalities. In particular, it defines a namespace.
+
+   A file defines a module: Both files ~File~ and ~file~ define module ~File~.
+
+   Inside a module, one can define other modules, *of course*.
+
+   Modules can be recursive.
+
+** Interface (*~mli~*) & implementation (*~ml~*)
+
+   ~OCaml~ programmers detach API interfaces (documentation,
+   typing, ...) from their implementation in separate files
+
+   Usage: Do *not* type every and all functions coded,just the exported
+   ones and those whose type cannot be correctly inferred.
+
+   So for a given file-based module
+   - ~mli~ files contain interfaces (aka type signatures)
+   - ~ml~  files contain implementations
+
+
+
+   For "programmatic" modules, you will use ~module type~ to abstract
+   functionalities/traits and ~module~ for implementing said modules.
+
+***                                                                  :B_note:
+    :PROPERTIES:
+    :BEAMER_env: note
+    :END:
+
+    Think C headers/C separation but with checks, and a real module system.
+
+** ~mli~ & ~ml~ 
+
+*** Implementation
+    #+include: "./code/naiveset.ml" src ocaml
+
+*** Interface
+    #+include: "./code/naiveset.mli" src ocaml   
+** Levels of type abstraction                                       :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :END:
+
+   #+begin_center
+   Modules help to delimit abstraction barriers and one can choose the desired
+   level of abstraction.
+   #+end_center
+
+** Open visibility                                                  :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   Open types can be directly constructed & destructed
+
+                #+begin_src ocaml
+                  module Interval_concrete = struct
+                    type t =
+                    | Ival of { lo : int; hi : int; } (* here's an inline record *)
+                    | Top
+
+                    let top = Top 
+
+                    let ival ~lo ~hi =
+                      assert (lo <= hi);
+                      if lo = min_int && hi = max_int then top
+                      else Ival {lo; hi;}
+                  end
+#+end_src
+
+#+begin_src ocaml
+                  open Interval_concrete
+
+                  (* Pattern-matching is ok *)
+                  let size = function
+                    | Ival {lo; hi; } -> float @@ hi - lo + 1
+                    | Top -> infinity
+
+                  (* This is authorized. *)
+                  let interval = Top
+
+                  (* This is too
+                   * the [top] function is part of the module signature *)
+                  let top2 = top
+                #+end_src
+
+
+
+** Private visibility                                               :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :CUSTOM_ID: private_module
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+    *Private types* can be:
+    - constructed only by predefined module-local functions,
+    - destructed by usual pattern matching.
+
+                 #+begin_src ocaml :exports code
+                   module type IPRIVATE = sig
+                     type t = private
+                             | Ival of { lo : int; hi: int;}
+                             | Top
+
+                     val ival : lo:int -> hi:int -> t
+                     val top : t
+                   end
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+ #+begin_src ocaml
+                    module Interval_private : IPRIVATE = Interval_concrete
+
+                    open Interval_private
+
+                    (* Pattern-matching is ok on private types *)
+                    let size = function
+                      | Ival {lo; hi; } -> float @@ hi - lo + 1
+                      | Top -> infinity
+
+                    (* This is ok * the [top] function is part of
+                     * the [IPRIVATE] module signature *)
+                    let top2 = top
+                  #+end_src
+
+                  #+RESULTS[e2c11e95d69f5bd66ac7944c12747bda6388901e]:
+                  #+begin_src ocaml :tangle no :results silent
+                  module Interval_private : IPRIVATE
+                  val size : Interval_private.t -> float = <fun>
+                  val top2 : Interval_private.t = Interval_private.Top
+                  #+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+                  #+begin_src ocaml :tangle no 
+                    (* This is not authorized. *)
+                    let interval = Top
+                  #+end_src
+
+                  #+RESULTS[d40f6b3d2cc745d49aae9150cdc1b768fbc03b04]:
+                  #+begin_src ocaml :tangle no :results silent
+                  Line 2, characters 15-18:
+                  2 | let interval = Top;;
+                                     ^^^
+                  Error: Cannot create values of the private type Interval_private.t
+                  #+end_src
+
+
+** Abstract visibility                                              :B_frame:
+   :PROPERTIES:
+   :BEAMER_env: frame
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+    *Abstract types* can be constructed & destructed only be predefined functions
+
+
+                 #+begin_src ocaml
+                   module type IABSTRACT = sig
+                     type t (* opaque to the outside world *)
+                     val ival : lo:int -> hi:int -> t ;;
+                     val top : t
+
+                     (** Accessors needs to be in the interface now *)
+                     val is_top : t -> bool
+
+                     (** Fails if value is [!top] *)
+                     val lo : t -> int
+                     val hi : t -> int
+                   end
+#+end_src
+
+
+#+begin_src ocaml
+  module Interval_abstract : IABSTRACT = struct
+    include Interval_concrete 
+
+    let is_top = function Top -> true
+    | Ival _ -> false
+
+     let lo = function
+     | Ival i -> i.lo
+     | Top -> assert false
+
+     let hi = function
+     | Ival i -> i.hi
+     | Top -> assert false
+  end
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml
+  open Interval_abstract
+
+  (* Pattern-matching does not work anymore *)
+  let size ival =
+    if is_top ival then infinity
+    else float @@ hi ival - lo ival + 1
+
+  (* This is ok for the [top] function is part
+     of the module signature *)
+  let top2 = top 
+#+end_src
+
+#+RESULTS[86efbacd7b1182b8544b51a3f917a2a38b209822]:
+#+begin_src ocaml :tangle no :results silent
+val size : Interval_abstract.t -> float = <fun>
+val top2 : Interval_abstract.t = <abstr>
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml :tangle no 
+                   (* This is still not authorized. *)
+                   let interval = Top 
+                 #+end_src
+
+                 #+RESULTS[84bee6eb137e3ee8116b7f610d00300ed9e96215]:
+                 #+begin_src ocaml :tangle no :results silent
+                 Line 2, characters 15-18:
+                 2 | let interval = Top;;
+                                    ^^^
+                 Error: Cannot create values of the private type Interval_private.t
+                 #+end_src
+
+
+
+** Genericity: let-polymorphism
+
+  #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+   #+begin_src ocaml
+     let rec length = function 
+       | [] -> 0
+       | _ :: l' -> 1 + length l'
+     ;;
+   #+end_src
+
+   #+RESULTS[d0dd583eca64666ff140ed76665dc955c15eeee2]:
+   #+begin_src ocaml :tangle no :results silent
+   val length : 'a list -> int = <fun>
+   #+end_src
+
+** Genericity: Functors 
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   The standard library has functors for sets, maps (tree-based persistent
+   dictionaries) and hashtables.
+
+   #+begin_src ocaml :results silent
+     module type PRINTABLE = sig
+       type t
+       val pp: Format.formatter -> t -> unit
+     end
+
+     module List_printer(X:PRINTABLE) = struct
+       let pp_list
+             ?(pre=(fun ppf () -> Format.pp_print_string ppf "["))
+             ?(post=(fun ppf () -> Format.pp_print_string ppf "]"))
+             ?(sep=(fun ppf () -> Format.fprintf ppf ";@ "))
+             ppf l =
+         let open Format in
+         let rec loop = function
+           | [] -> post ppf ()
+           | e :: es ->
+              begin
+                X.pp ppf e;
+                sep ppf ();
+                loop es
+              end
+         in pre ppf (); loop l
+     end
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml
+  module Int_list_pp =
+    List_printer(struct type t = int let pp = Format.pp_print_int end)
+
+  let pp_ilist ppf l = Int_list_pp.pp_list ppf l ;;
+  pp_ilist Format.std_formatter [1;2;3]
+#+end_src
+
+#+RESULTS[e744d27766b3bb458639ebb336d99f475e94f2d1]:
+#+begin_src ocaml :tangle no :results silent
+[1; 2; 3;
+]- : unit = ()
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml
+     module String_list_pp =
+       List_printer(
+           struct 
+             type t = string 
+             let pp = Format.pp_print_string 
+           end)
+
+     let pp_slist = fun ppf l -> String_list_pp.pp_list ppf l;;
+     Format.printf "@[<h>%a@]" pp_slist  ["foo"; "bar"; "bar";] ;;
+   #+end_src
+
+   #+RESULTS[f39156af4b37087112b3c19cb85143669213d4fa]:
+   #+begin_src ocaml :tangle no :results silent
+   [foo; bar; bar; ]- : unit = ()
+   #+end_src
+
+** First-class modules
+
+   Modules can also be used as "first-class" values.
+
+   #+begin_src ocaml
+     module type COMPARABLE = sig
+       type t
+       val compare : t -> t -> int
+     end
+
+     let lmax (type a) (module M:COMPARABLE with type t = a) (l:a list) =
+       let rec aux vmax l =
+         match l with
+         | [] -> vmax
+         | x :: xs ->
+            let vmax' =
+              match vmax with
+              | None -> Some x
+              | Some v -> if M.compare x v > 0 then Some x else vmax in
+            aux vmax' xs
+       in aux None l
+
+     module Int = struct type t = int let compare = Stdlib.compare end ;;
+#+end_src
+
+** Using first-class module
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml
+     lmax (module Int) [1;2;3;] ;;
+#+end_src
+
+#+RESULTS[71c32b49c1a5a7816328d340a9523fe7a87183f8]:
+#+begin_src ocaml :tangle no :results silent
+- : Int.t option = Some 3
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml
+     (* Module [String] is part of the standard library *)
+     lmax (module String) ["foo"; "bar"; "baz";] ;;
+   #+end_src
+
+   #+RESULTS[24ef19a6387cb3a426dcff41283f14bb096d8658]:
+   #+begin_src ocaml :tangle no :results silent
+   - : String.t option = Some "foo"
+   #+end_src
+
+
+** More involved example
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+
+    #+begin_src ocaml :results silent
+      type ('var,'cst,'bop,'uop) expr =
+        | Var of 'var
+        | Cst of 'cst
+        | Bop of 'bop *
+                   ('var,'cst,'bop,'uop) expr *
+                     ('var,'cst,'bop,'uop) expr
+        | Uop of 'uop * ('var,'cst,'bop,'uop) expr
+
+      module type EXPR = sig
+        type var
+        type uop
+        type cst
+        type bop
+      end
+#+end_src
+
+** Defining an ~EXPR~ module
+
+#+begin_src ocaml :results silent
+      module Bool = struct
+        type bop =
+          | Band
+          | Bor
+          | Bxor
+
+        type uop = Bnot
+
+        type var = string
+
+        type cst = bool
+      end
+#+end_src
+
+** Generic free variable computation
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml :session
+     let free_variables (type a b c d)
+           (module M:EXPR with type var = a and type cst = b and
+                               type bop = c and type uop = d)
+           (e:(a,b,c,d) expr) : a list =
+       let module S =
+         Set.Make(struct type t = M.var let compare = Stdlib.compare end) in
+       let rec loop (set:S.t) = function
+         | Var v -> S.add v set
+         | Cst _ -> set
+         | Bop (_, e1, e2) -> S.union (loop set e1) (loop S.empty e2)
+         | Uop (_, e) -> loop set e
+       in
+       let set = loop S.empty e in
+       S.fold List.cons set []
+     ;;
+#+end_src
+
+#+RESULTS[5db03a98b9fe0ca8168dc24ced05b88a1fef00d3]:
+#+begin_src ocaml :tangle no :results silent
+val free_variables :
+  (module EXPR with type bop = 'a and type cst = 'b and type uop = 'c and type var = 'd) ->
+  ('d, 'b, 'a, 'c) expr -> 'd list = <fun>
+#+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+#+begin_src ocaml :session
+     free_variables (module Bool) (Var "foo") ;;
+    #+end_src
+
+    #+RESULTS[e2969aade96a433895e9f42519d256f6125ab45d]:
+    #+begin_src ocaml :tangle no :results silent
+    - : Bool.var list = ["foo"]
+    #+end_src
+
+
+
+** Monadic style programming
+
+   The following type has been making a comeback.
+
+   #+begin_src ocaml
+     type ('a, 'b) result =
+       | Ok of 'a
+       | Error of 'b
+   #+end_src
+
+   and with it, monadic-style programming
+
+   There is no dedicated notation (no ~do~)for working inside monads.
+
+   One usually directly luses the ~M.bind~ function of monad ~M~ or, define an infix
+   operator (~>>=~)
+
+** Option type, monadic style
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"                 
+   #+begin_src ocaml
+     let (>>=) = Option.bind 
+
+     let hd = function
+       | [] -> None
+       | x :: _ -> Some x
+
+     let sum_heads l1 l2 =
+       hd l1 >>=
+         fun v1 -> hd l2 >>=
+         fun v2 -> v1 + v2 |> Option.some
+   #+end_src
+
+   #+RESULTS[a33b7bf1c8c56ed19f880c75c9c884485b1fa33c]:
+   #+begin_src ocaml :tangle no :results silent
+   val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option = <fun>
+   val hd : 'a list -> 'a option = <fun>
+   val sum_heads : int list -> int list -> int option = <fun>
+   #+end_src
+
+** GADTs
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   Generalized Abstract Data Types are available in ~OCaml~ since version
+   ~4.00~ (cite:PotRG06POPL,ProgGADTS).
+
+   They are sparsely used but can be pretty useful.
+
+   #+begin_src ocaml
+     type _ bop =
+       | Add : int bop
+       | Mul : int bop
+       | Div : int bop
+       | Bor : bool bop
+       | Band : bool bop
+
+     type _ uop =
+       | UMin : int uop
+       | Bnot : bool uop
+
+     type comparison = Eq | Gt
+#+end_src
+
+
+#+begin_src ocaml 
+     type _ typ =
+       | Int  : int -> int typ
+       | Bool : bool -> bool typ
+       | Ite  : bool typ * 'a typ * 'a typ -> 'a typ
+       | Bin  : 'a bop * 'a typ * 'a typ -> 'a typ
+       | Un   : 'a uop * 'a typ -> 'a typ
+       | Cmp  : comparison * 'a typ * 'a typ -> bool typ 
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     let term = Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11)
+
+     let term2 = 
+       Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), 
+            Bool true, Un (Bnot, Bool true)) ;;
+#+end_src
+
+#+RESULTS[259d16c18aaa75689a07a76aacda156aa5111989]:
+#+begin_src ocaml :tangle no
+val term : int typ = Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11)
+val term2 : bool typ =
+  Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), Bool true, Un (Bnot, Bool true))
+#+end_src
+
+
+#+begin_src ocaml
+  let eval_bop: type a. a bop -> a -> a -> a = function
+    | Add -> ( + ) 
+    | Mul -> ( * ) 
+    | Div -> ( / )
+    | Bor -> ( || ) 
+    | Band -> ( && )
+
+  let eval_cmp = function Eq -> ( = ) | Gt -> ( > ) ;;
+
+  let rec eval: type a. a typ -> a  = function
+    | Int n -> n
+    | Bool b -> b
+    | Ite (b, csq, alt) -> if eval b then eval csq else eval alt
+    | Bin (op, e1, e2) -> eval_bop op (eval e1) (eval e2)
+    | Un (UMin, e) -> - (eval e)
+    | Un (Bnot, e) -> not (eval e)
+    | Cmp (op, e1, e2) -> (eval_cmp op) (eval e1) (eval e2)
+    ;;
+#+end_src
+
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+#+begin_src ocaml
+     (* Ite (Cmp (Eq, Int 3, Int 4), Int 12, Int 11) *)
+     eval term  ;;
+     #+end_src
+
+     #+RESULTS[9d079002dd4d7e1c2f49672344b5d717519fb63c]:
+     #+begin_src ocaml :tangle no
+     - : int = 11
+     #+end_src
+
+        #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+     #+begin_src ocaml
+          (* let term2 = 
+           ,*   Ite (Cmp (Eq, Int 3, Un (UMin, Int 2)), 
+           ,*        Bool true, Un (Bnot, Bool true)) ;; *)
+
+          eval term2 ;;
+   #+end_src
+
+   #+RESULTS[12c04687f05cd59fecb44dbdcac24afc52f4e0ee]:
+   #+begin_src ocaml :tangle no
+   - : bool = false
+   #+end_src
+
+
+** Death by GADTs
+
+   With great expressiveness may come great unreadability ;-)
+
+   #+begin_src ocaml :tangle no
+     (* in stdlib/camlinternalFormatBasics.ml *)
+     and ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+          'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel =
+       | Char_ty :                                          (* %c  *)
+           ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+            'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel ->
+           (char -> 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+            char -> 'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel
+       | String_ty :                                        (* %s  *)
+           ('a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+            'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel ->
+           (string -> 'a1, 'b1, 'c1, 'd1, 'e1, 'f1,
+            string -> 'a2, 'b2, 'c2, 'd2, 'e2, 'f2) fmtty_rel
+#+end_src
+
+
+#+begin_src ocaml :tangle no
+     (* same file *)
+     let rec erase_rel : type a b c d e f g h i j k l .
+       (a, b, c, d, e, f, g, h, i, j, k, l) fmtty_rel -> 
+       (a, b, c, d, e, f) fmtty
+   #+end_src
+
+
+** ~Format~'ing text
+
+   The ~Format~ module is a pretty-printing facility
+   available in the standard library with a ~Printf~-like string format. 
+
+   ~Format~ structures outputs using *boxes* and *break hints*.
+
+   3 salient elements to think about
+   - ~Format.fprintf~
+   - the ~formatter~ abstraction (one level above ~output_channel~)
+   - ~%a~ to chain pretty printers
+
+** ~Format~ example
+
+   #+begin_src ocaml 
+     module E = struct
+       type t =
+         | Int of int
+         | Add of t * t
+
+       let rec pp_expr ppf = function
+         | Int n -> Format.fprintf ppf "%02d" n
+         | Add (e1, e2) ->
+            Format.fprintf ppf "%a +@ %a" pp_expr e1 pp_expr e2
+     end
+     #+end_src
+
+   #+header: :exports both :results value code :results_switches ":tangle no"     
+     #+begin_src ocaml
+     let () =
+       let open E in
+       List.fold_left (fun e n -> Add (Int n, e)) (Int 0) (1 |-> 20)
+       |>  Format.printf "@[<hov>%a@]@." pp_expr 
+   #+end_src
+
+   #+RESULTS[d82c34e65ae604e85ed91a67aa76495505065ff5]:
+   #+begin_src ocaml :tangle no :results silent
+   20 + 19 + 18 + 17 + 16 + 15 + 14 + 13 + 12 + 11 + 10 + 09 + 08 + 07 + 06 +
+   05 + 04 + 03 + 02 + 01 + 00
+   #+end_src
+
+   For more: cite:BonWeis18
+
+
+** Polymorphic variants 
+   :PROPERTIES:
+   :BEAMER_opt: allowframebreaks
+   :END:
+
+   #+header: :exports both :results value code :results_switches ":tangle no :results silent"
+   #+BEGIN_SRC ocaml
+     type const = [ `True | `False ]
+
+     (* See e.g., https://en.wikipedia.org/wiki/NAND_logic *)
+     let rec nandify = function
+       | #const as b -> b
+       | `Bnot b ->
+          let b' = nandify b in `Bnand (b', b')
+       | `Band (b1, b2) ->
+          let b1 = nandify b1 and b2 = nandify b2 in
+          `Bnand (`Bnand (b1, b2), `Bnand (b1, b2))
+       | `Bnand (b1, b2) ->
+          `Bnand(nandify b1, nandify b2)
+       | `Bor (b1, b2) ->
+          let b1 = nandify b1 and b2 = nandify b2 in
+          `Bnand (`Bnand (b1, b1), `Bnand (b2, b2))
+   #+END_SRC
+
+   #+RESULTS[5b23f696de05031588e01a6b1db45b787c872e16]:
+   #+begin_src ocaml :tangle no :results silent
+   type const = [ `False | `True ]
+   val nandify :
+     ([< `Band of 'a * 'a
+       | `Bnand of 'a * 'a
+       | `Bnot of 'a
+       | `Bor of 'a * 'a
+       | `False
+       | `True ]
+      as 'a) ->
+     ([> `Bnand of 'b * 'b | `False | `True ] as 'b) = <fun>
+   #+end_src
+
+   See cite:Yak08,JGar98,JGar00 
+
+
+** Things that I did not talk about
+
+
+   - Low-level representation cite:lowLevelOCaml
+   - Objects
+   - Laziness (~lazy~ keyword, streams, ..., ~Seq~) cite:OCamlManual
+   - GC cite:bestFitGC,GCRWOC
+   - PPX syntax extensions (deriving, sexp, ...)
+   - FFI
+   - Ecosystem
+     - parser generator: ocamlyacc, Menhir cite:Pot16,PotRG06
+     - libraries
+     - ...
+
+* Conclusion
+
+** Give it a try
+
+   #+begin_center
+   \Huge  ~OCaml~: a pragmatic functional language
+   #+end_center
+
+   
+
+    #+begin_center
+    Try it at https://ocaml.org/
+    #+end_center
+
+
+** Final remark                                              
+
+    #+begin_quote
+    With OCaml, you’re not learning the computer programming of the last 10 years, you’re learning the
+    programming of the 10 coming years.
+
+    -- 
+
+    Sylvain Conchon 
+
+    https://www.ocamlpro.com/2020/06/05/interview-sylvain-conchon-cso-on-formal-methods/
+    #+end_quote
+
+* References                                                :B_ignoreheading:
+  :PROPERTIES:
+  :BEAMER_env: ignoreheading
+  :BEAMER_opt: allowframebreaks
+  :END:
+
+  bibliographystyle:abbrvnat
+  bibliography:./biblio.bib
+
+
