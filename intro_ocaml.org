@@ -1876,13 +1876,15 @@ val term2 : bool typ =
 ** Give it a try
 
    #+begin_center
-   \Huge  ~OCaml~: a pragmatic functional language
+   \Huge  ~OCaml~
+
+   \large A pragmatic functional language
    #+end_center
 
    
 
     #+begin_center
-    Try it at https://ocaml.org/
+    \large Try it at https://ocaml.org/
     #+end_center
 
 
@@ -1898,6 +1900,17 @@ val term2 : bool typ =
 
     https://www.ocamlpro.com/2020/06/05/interview-sylvain-conchon-cso-on-formal-methods/
     #+end_quote
+
+** Questions?
+
+   #+begin_center
+   #+attr_latex: :width .8\textwidth
+   [[file:img/thatsallfolks.jpg]]
+   #+end_center
+
+   #+begin_center
+    https://github.com/rbonichon/skillsmatter_20200625
+      #+end_center
 
 * References                                                :B_ignoreheading:
   :PROPERTIES:
