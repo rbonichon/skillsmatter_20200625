@@ -206,10 +206,9 @@ val add : int -> int -> int = <fun>
     Currying is taking a multiple argument functions and converting it to n
     1-arg funs
 
-** Recursivity                                                       :B_note:
+** Recursivity
    :PROPERTIES:
    :BEAMER_opt: allowframebreaks
-   :BEAMER_env: note
    :END:
 
    Recursive functions are explicitly qualified by the *rec* keyword.
