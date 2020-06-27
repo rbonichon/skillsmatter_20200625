@@ -1645,7 +1645,7 @@ val free_variables :
    :BEAMER_opt: allowframebreaks
    :END:
 
-   Generalized Abstract Data Types are available in ~OCaml~ since version
+   Generalized Algebraic Data Types are available in ~OCaml~ since version
    ~4.00~ (cite:PotRG06POPL,ProgGADTS).
 
    They are sparsely used but can be pretty useful.

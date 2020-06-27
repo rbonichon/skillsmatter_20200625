@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-26 Fri 07:46 -->
+<!-- 2020-06-27 Sat 10:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to OCaml</title>
@@ -272,12 +272,12 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Introduction to OCaml</h1>
 
-<div id="outline-container-orgf799982" class="outline-2">
-<h2 id="orgf799982"><span class="section-number-2">1</span> Background</h2>
+<div id="outline-container-org004ef66" class="outline-2">
+<h2 id="org004ef66"><span class="section-number-2">1</span> Background</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgc315c1d" class="outline-3">
-<h3 id="orgc315c1d"><span class="section-number-3">1.1</span> The Categorical Abstract Machine Language</h3>
+<div id="outline-container-orgab0a78e" class="outline-3">
+<h3 id="orgab0a78e"><span class="section-number-3">1.1</span> The Categorical Abstract Machine Language</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 OCaml is part of the ML family, like SML (big brother) or F# (little brother).
@@ -294,8 +294,8 @@ OCaml is part of the ML family, like SML (big brother) or F# (little brother).
 </div>
 </div>
 
-<div id="outline-container-orgc9fd932" class="outline-3">
-<h3 id="orgc9fd932"><span class="section-number-3">1.2</span> OCaml : an open-minded functional language</h3>
+<div id="outline-container-orgb7be8f6" class="outline-3">
+<h3 id="orgb7be8f6"><span class="section-number-3">1.2</span> OCaml : an open-minded functional language</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-center">
 <p>
@@ -312,8 +312,8 @@ OCaml is <b>not</b> a pure functional language
 </div>
 
 
-<div id="outline-container-org8ba97b7" class="outline-3">
-<h3 id="org8ba97b7"><span class="section-number-3">1.3</span> Bytecode and native code support</h3>
+<div id="outline-container-orgd151add" class="outline-3">
+<h3 id="orgd151add"><span class="section-number-3">1.3</span> Bytecode and native code support</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 2 compilers for the price of one:
@@ -334,8 +334,8 @@ OCaml is <b>not</b> a pure functional language
 
 
 
-<div id="outline-container-orgef15e3b" class="outline-3">
-<h3 id="orgef15e3b"><span class="section-number-3">1.4</span> Users</h3>
+<div id="outline-container-orga01b54b" class="outline-3">
+<h3 id="orga01b54b"><span class="section-number-3">1.4</span> Users</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>Academic circles
@@ -353,7 +353,7 @@ OCaml is <b>not</b> a pure functional language
 
 
 <ol class="org-ol">
-<li><a id="org833974d"></a>:B<sub>note</sub>:<br />
+<li><a id="orgd28215d"></a>:B<sub>note</sub>:<br />
 <div class="outline-text-4" id="text-1-4-1">
 <p>
 Its french origin shows in the community. The financial application have
@@ -364,8 +364,8 @@ increased recently but Lexifi started 20 years ago (ICFP 2000)
 </ol>
 </div>
 
-<div id="outline-container-orgd1683b9" class="outline-3">
-<h3 id="orgd1683b9"><span class="section-number-3">1.5</span> Natural application fields</h3>
+<div id="outline-container-org2355b3a" class="outline-3">
+<h3 id="org2355b3a"><span class="section-number-3">1.5</span> Natural application fields</h3>
 <div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li>compilers</li>
@@ -377,8 +377,8 @@ increased recently but Lexifi started 20 years ago (ICFP 2000)
 </div>
 
 
-<div id="outline-container-org4d4ec1b" class="outline-3">
-<h3 id="org4d4ec1b"><span class="section-number-3">1.6</span> Tooling (as of 2020)</h3>
+<div id="outline-container-org56b988f" class="outline-3">
+<h3 id="org56b988f"><span class="section-number-3">1.6</span> Tooling (as of 2020)</h3>
 <div class="outline-text-3" id="text-1-6">
 <dl class="org-dl">
 <dt><a href="https://github.com/ocaml/ocaml">compiler</a></dt><dd>last release is <code>4.10</code> (2020-02-21)</dd>
@@ -419,12 +419,12 @@ A source-based package manager for OCaml software.
 
 
 
-<div id="outline-container-org251557b" class="outline-2">
-<h2 id="org251557b"><span class="section-number-2">2</span> Building blocks</h2>
+<div id="outline-container-orgd7f3111" class="outline-2">
+<h2 id="orgd7f3111"><span class="section-number-2">2</span> Building blocks</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga46126c" class="outline-3">
-<h3 id="orga46126c"><span class="section-number-3">2.1</span> let-bindings</h3>
+<div id="outline-container-org2969803" class="outline-3">
+<h3 id="org2969803"><span class="section-number-3">2.1</span> let-bindings</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-ocaml">let add x y = x + y (* or let add = ( + ) *)
@@ -455,7 +455,7 @@ A source-based package manager for OCaml software.
 
 
 <ol class="org-ol">
-<li><a id="org3992a42"></a>:B<sub>note</sub>:<br />
+<li><a id="orgd179e5b"></a>:B<sub>note</sub>:<br />
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 Name bindings are introduced by <code>let</code>. <code>let .. in</code> is a locally scoped binding.
@@ -465,8 +465,8 @@ Name bindings are introduced by <code>let</code>. <code>let .. in</code> is a lo
 </ol>
 </div>
 
-<div id="outline-container-org8618834" class="outline-3">
-<h3 id="org8618834"><span class="section-number-3">2.2</span> Functions: curried by default</h3>
+<div id="outline-container-orgd038ebc" class="outline-3">
+<h3 id="orgd038ebc"><span class="section-number-3">2.2</span> Functions: curried by default</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Functions are <b>curried</b> (unlike SML functions).
@@ -494,7 +494,7 @@ add1 2
 </div>
 
 <ol class="org-ol">
-<li><a id="org26dd9da"></a>:B<sub>note</sub>:<br />
+<li><a id="org7bdad46"></a>:B<sub>note</sub>:<br />
 <div class="outline-text-4" id="text-2-2-1">
 <p>
 Currying is taking a multiple argument functions and converting it to n
@@ -505,9 +505,86 @@ Currying is taking a multiple argument functions and converting it to n
 </ol>
 </div>
 
-<div id="outline-container-orge4637a6" class="outline-3">
-<h3 id="orge4637a6"><span class="section-number-3">2.3</span> Corollary</h3>
+<div id="outline-container-orgc19f6a4" class="outline-3">
+<h3 id="orgc19f6a4"><span class="section-number-3">2.3</span> Recursivity</h3>
 <div class="outline-text-3" id="text-2-3">
+<p>
+Recursive functions are explicitly qualified by the <b>rec</b> keyword.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(** [foldlf v l] is f ... (f (f v a0) a1) ... an)
+ ** assuming [l] is [a0; a1; ...; an].
+ ** [foldl] is sometimes called reduce ,*)
+let rec foldl f acc = function
+  | [] -&gt; acc
+  | x :: xs -&gt; foldl f (f acc x) xs ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val foldl : ('a -&gt; 'b -&gt; 'a) -&gt; 'a -&gt; 'b list -&gt; 'a = &lt;fun&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">foldl (+) 0 [1;2;3;4]  ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int = 10
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">(** [( |-&gt; ) n m] is an infix operator computing
+ ** the list of elements from [n] included to [m] included. *)
+  let ( |-&gt; ) lo hi  =
+    let rec loop acc n =
+      if n &gt; hi then List.rev acc
+      else loop (n :: acc) (n + 1) in
+    loop [] lo
+  ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">val ( |-&gt; ) : int -&gt; int -&gt; int list = &lt;fun&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-ocaml">1 |-&gt; 10 ;;
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-ocaml">- : int list = [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+</pre>
+</div>
+</div>
+
+
+<ol class="org-ol">
+<li><a id="orgffffe62"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-3-1">
+<ul class="org-ul">
+<li>We can define functions inside functions</li>
+<li>We'll see later that closures (reference to outer env) are done automatically</li>
+<li>The pattern inside is very common to get tail-recursion (accumulate then reverse)</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+
+<div id="outline-container-orgcdbe572" class="outline-3">
+<h3 id="orgcdbe572"><span class="section-number-3">2.4</span> Corollary</h3>
+<div class="outline-text-3" id="text-2-4">
 <div class="org-center">
 <p>
 Functions are <b>not recursive</b> by default.
@@ -530,8 +607,8 @@ let ( |-&gt; ) lo hi =
 
 
 <ol class="org-ol">
-<li><a id="org6414484"></a>:B<sub>note</sub>:<br />
-<div class="outline-text-4" id="text-2-3-1">
+<li><a id="org3b41d26"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-4-1">
 <p>
 Assertions are checked at runtime and trigger (catchable) exceptions
 </p>
@@ -544,9 +621,9 @@ Assertions are checked at runtime and trigger (catchable) exceptions
 </ol>
 </div>
 
-<div id="outline-container-org8138769" class="outline-3">
-<h3 id="org8138769"><span class="section-number-3">2.4</span> Functions are first-class citizens</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-orgb04fe61" class="outline-3">
+<h3 id="orgb04fe61"><span class="section-number-3">2.5</span> Functions are first-class citizens</h3>
+<div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
 <pre class="src src-ocaml">(** [max cmp l] computes the maximun element of a list [l] provided a [cmp]
  ** function conforming to the following specification:
@@ -596,9 +673,9 @@ Stdlib.max ;;
 </div>
 </div>
 
-<div id="outline-container-org4d8eb6a" class="outline-3">
-<h3 id="org4d8eb6a"><span class="section-number-3">2.5</span> Evaluation is strict</h3>
-<div class="outline-text-3" id="text-2-5">
+<div id="outline-container-org18c87ca" class="outline-3">
+<h3 id="org18c87ca"><span class="section-number-3">2.6</span> Evaluation is strict</h3>
+<div class="outline-text-3" id="text-2-6">
 <p>
 Laziness (call-by-name / call-by-need) is not the default evaluation mode. 
 </p>
@@ -633,8 +710,8 @@ dadd (double 1) (double 2) ;;
 </div>
 
 <ol class="org-ol">
-<li><a id="orgdc625d3"></a>:B<sub>note</sub>:<br />
-<div class="outline-text-4" id="text-2-5-1">
+<li><a id="orgda3400e"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-6-1">
 <p>
 We see not only that all arguments are evaluated (even unused ones), but
 that <code>double y</code> is evaluated twice. Not much optimization is done by default.
@@ -648,9 +725,9 @@ The <code>_</code> prefix notation avoid unused variable warning
 </ol>
 </div>
 
-<div id="outline-container-orga0cdb70" class="outline-3">
-<h3 id="orga0cdb70"><span class="section-number-3">2.6</span> Evaluation Oddity</h3>
-<div class="outline-text-3" id="text-2-6">
+<div id="outline-container-orgbac9467" class="outline-3">
+<h3 id="orgbac9467"><span class="section-number-3">2.7</span> Evaluation Oddity</h3>
+<div class="outline-text-3" id="text-2-7">
 <p>
 Evaluation order for function arguments is <b>unspecified</b>.
 </p>
@@ -680,9 +757,9 @@ It is usually right-to-left, as exemplified by the snippet below.
 </div>
 
 
-<div id="outline-container-orgddc1278" class="outline-3">
-<h3 id="orgddc1278"><span class="section-number-3">2.7</span> Grouping information : Tuples&#xa0;&#xa0;&#xa0;<span class="tag"><span class="proofreading">proofreading</span></span></h3>
-<div class="outline-text-3" id="text-2-7">
+<div id="outline-container-org581642e" class="outline-3">
+<h3 id="org581642e"><span class="section-number-3">2.8</span> Grouping information : Tuples&#xa0;&#xa0;&#xa0;<span class="tag"><span class="proofreading">proofreading</span></span></h3>
+<div class="outline-text-3" id="text-2-8">
 <div class="org-src-container">
 <pre class="src src-ocaml">let a = 1, 2 in
 let x, y = a in
@@ -717,9 +794,9 @@ x + y
 
 
 
-<div id="outline-container-org44fa560" class="outline-3">
-<h3 id="org44fa560"><span class="section-number-3">2.8</span> Everything is a pattern</h3>
-<div class="outline-text-3" id="text-2-8">
+<div id="outline-container-org8f4ecee" class="outline-3">
+<h3 id="org8f4ecee"><span class="section-number-3">2.9</span> Everything is a pattern</h3>
+<div class="outline-text-3" id="text-2-9">
 <div class="org-src-container">
 <pre class="src src-ocaml">let create x y z = x, y, z
 
@@ -743,9 +820,9 @@ let dist (x1, y1, z1) p =
 </div>
 
 
-<div id="outline-container-org43f9a01" class="outline-3">
-<h3 id="org43f9a01"><span class="section-number-3">2.9</span> <code>dist</code>: another version</h3>
-<div class="outline-text-3" id="text-2-9">
+<div id="outline-container-orga820526" class="outline-3">
+<h3 id="orga820526"><span class="section-number-3">2.10</span> <code>dist</code>: another version</h3>
+<div class="outline-text-3" id="text-2-10">
 <div class="org-src-container">
 <pre class="src src-ocaml">let dist p1 p2 =
   match p1, p2 with
@@ -766,8 +843,8 @@ let dist (x1, y1, z1) p =
 </div>
 
 <ol class="org-ol">
-<li><a id="org063d94a"></a>:B<sub>note</sub>:<br />
-<div class="outline-text-4" id="text-2-9-1">
+<li><a id="org05f276e"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-10-1">
 <p>
 I've deliberately used <code>@@</code> instead of <code>|&gt;</code> to show yet another infix operator
 </p>
@@ -776,9 +853,9 @@ I've deliberately used <code>@@</code> instead of <code>|&gt;</code> to show yet
 </ol>
 </div>
 
-<div id="outline-container-orge7e1061" class="outline-3">
-<h3 id="orge7e1061"><span class="section-number-3">2.10</span> Grouping information : Records (aka named tuples)</h3>
-<div class="outline-text-3" id="text-2-10">
+<div id="outline-container-org4c66452" class="outline-3">
+<h3 id="org4c66452"><span class="section-number-3">2.11</span> Grouping information : Records (aka named tuples)</h3>
+<div class="outline-text-3" id="text-2-11">
 <div class="org-src-container">
 <pre class="src src-ocaml">type point_2d = { x : float; y: float; }  ;;
 
@@ -813,9 +890,9 @@ let dist p1 p2 =
 </div>
 </div>
 
-<div id="outline-container-org540c1c2" class="outline-3">
-<h3 id="org540c1c2"><span class="section-number-3">2.11</span> Building / destructing records</h3>
-<div class="outline-text-3" id="text-2-11">
+<div id="outline-container-org76982ca" class="outline-3">
+<h3 id="org76982ca"><span class="section-number-3">2.12</span> Building / destructing records</h3>
+<div class="outline-text-3" id="text-2-12">
 <div class="org-src-container">
 <pre class="src src-ocaml">(* Record can be built/destructed using a shortcut notation.
    [let create x y = { x; y; }] is a shortcut for
@@ -838,8 +915,8 @@ val of_int : int -&gt; int -&gt; point_2d = &lt;fun&gt;
 
 
 <ol class="org-ol">
-<li><a id="org78599c0"></a>Record size&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
-<div class="outline-text-4" id="text-2-11-1">
+<li><a id="orge52ef5b"></a>Record size&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-12-1">
 <p>
 Records are limited to 2<sup>22</sup> − 1 fields (aka max <code>Array</code> size)
 </p>
@@ -850,21 +927,21 @@ Records are limited to 2<sup>22</sup> − 1 fields (aka max <code>Array</code> s
 
 
 
-<div id="outline-container-orgdb6c7e3" class="outline-3">
-<h3 id="orgdb6c7e3"><span class="section-number-3">2.12</span> ADT &amp; pattern matching</h3>
-<div class="outline-text-3" id="text-2-12">
+<div id="outline-container-org71a0959" class="outline-3">
+<h3 id="org71a0959"><span class="section-number-3">2.13</span> ADT &amp; pattern matching</h3>
+<div class="outline-text-3" id="text-2-13">
 </div>
 <ol class="org-ol">
-<li><a id="org1460498"></a>Exhustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
-<div class="outline-text-4" id="text-2-12-1">
+<li><a id="orgefb7915"></a>Exhustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-13-1">
 <p>
 Exhaustiveness and fragility of pattern-matchings are reported by default.
 </p>
 </div>
 </li>
 
-<li><a id="org8d75a1c"></a>Example ADT (continue in next slide)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
-<div class="outline-text-4" id="text-2-12-2">
+<li><a id="org6c470a5"></a>Example ADT (continue in next slide)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-13-2">
 <div class="org-src-container">
 <pre class="src src-ocaml">type prop = (* inductively defined types do not need a rec keyword *)
   | Pcst of bool
@@ -880,9 +957,9 @@ Exhaustiveness and fragility of pattern-matchings are reported by default.
 </div>
 
 
-<div id="outline-container-orgf462c9e" class="outline-3">
-<h3 id="orgf462c9e"><span class="section-number-3">2.13</span> Lack of exhaustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
-<div class="outline-text-3" id="text-2-13">
+<div id="outline-container-orge14c9d2" class="outline-3">
+<h3 id="orge14c9d2"><span class="section-number-3">2.14</span> Lack of exhaustiveness&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-14">
 <div class="org-src-container">
 <pre class="src src-ocaml">let free_variables =
   (* The pattern matching in [loop] is well-typed but not exhaustive *)
@@ -911,9 +988,9 @@ val free_variables : prop -&gt; string list = &lt;fun&gt;
 </div>
 </div>
 
-<div id="outline-container-org582ca25" class="outline-3">
-<h3 id="org582ca25"><span class="section-number-3">2.14</span> Fragility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
-<div class="outline-text-3" id="text-2-14">
+<div id="outline-container-org5b44763" class="outline-3">
+<h3 id="org5b44763"><span class="section-number-3">2.15</span> Fragility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-15">
 <div class="org-src-container">
 <pre class="src src-ocaml">let free_variables =
   (* Now it is exhaustive, but ... fragile *)
@@ -939,9 +1016,9 @@ val free_variables : prop -&gt; string list = &lt;fun&gt;
 </div>
 
 
-<div id="outline-container-org792da2c" class="outline-3">
-<h3 id="org792da2c"><span class="section-number-3">2.15</span> Or-patterns&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
-<div class="outline-text-3" id="text-2-15">
+<div id="outline-container-org0d76a64" class="outline-3">
+<h3 id="org0d76a64"><span class="section-number-3">2.16</span> Or-patterns&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div class="outline-text-3" id="text-2-16">
 <p>
 The compact solution for this function includes or-patterns.
 </p>
@@ -974,9 +1051,9 @@ For (way) more: <a class='org-ref-reference' href="#LFeMar01">LFeMar01</a>
 </div>
 
 
-<div id="outline-container-orgede1d5e" class="outline-3">
-<h3 id="orgede1d5e"><span class="section-number-3">2.16</span> Labels (aka named arguments)</h3>
-<div class="outline-text-3" id="text-2-16">
+<div id="outline-container-org9180458" class="outline-3">
+<h3 id="org9180458"><span class="section-number-3">2.17</span> Labels (aka named arguments)</h3>
+<div class="outline-text-3" id="text-2-17">
 <p>
 Named arguments are mainly used for 2 reasons:
 </p>
@@ -1016,9 +1093,9 @@ let lbd = 12 and ubd = 15 in create ~lo:lbd ~hi:ubd ;;
 
 
 
-<div id="outline-container-org29fcab0" class="outline-3">
-<h3 id="org29fcab0"><span class="section-number-3">2.17</span> Optional arguments</h3>
-<div class="outline-text-3" id="text-2-17">
+<div id="outline-container-orgb2aa395" class="outline-3">
+<h3 id="orgb2aa395"><span class="section-number-3">2.18</span> Optional arguments</h3>
+<div class="outline-text-3" id="text-2-18">
 <p>
 A special case of named arguments is optional arguments
 </p>
@@ -1093,9 +1170,9 @@ Format.printf "%a@." pp_ival2 ival ;;
 
 
 
-<div id="outline-container-org77a71a2" class="outline-3">
-<h3 id="org77a71a2"><span class="section-number-3">2.18</span> Optional arguments <b>are</b> option types</h3>
-<div class="outline-text-3" id="text-2-18">
+<div id="outline-container-orgea6e3ac" class="outline-3">
+<h3 id="orgea6e3ac"><span class="section-number-3">2.19</span> Optional arguments <b>are</b> option types</h3>
+<div class="outline-text-3" id="text-2-19">
 <div class="org-src-container">
 <pre class="src src-ocaml">type ('a, 'b) return = {
     value : 'a;
@@ -1133,8 +1210,8 @@ let create_defaulted_return_value ?(explanation="message") value =
 </div>
 
 <ol class="org-ol">
-<li><a id="orgef71b1e"></a>:B<sub>note</sub>:<br />
-<div class="outline-text-4" id="text-2-18-1">
+<li><a id="org6c76ced"></a>:B<sub>note</sub>:<br />
+<div class="outline-text-4" id="text-2-19-1">
 <p>
 Did not talk about option type since this is now a fairly common feature of
 most programming languages
@@ -1144,9 +1221,9 @@ most programming languages
 </ol>
 </div>
 
-<div id="outline-container-org0084313" class="outline-3">
-<h3 id="org0084313"><span class="section-number-3">2.19</span> Using named arguments in practice</h3>
-<div class="outline-text-3" id="text-2-19">
+<div id="outline-container-orgc7fb01d" class="outline-3">
+<h3 id="orgc7fb01d"><span class="section-number-3">2.20</span> Using named arguments in practice</h3>
+<div class="outline-text-3" id="text-2-20">
 <p>
 A commonly used recipe to construct function signatures which include named arguments is:
 </p>
@@ -1159,8 +1236,8 @@ A commonly used recipe to construct function signatures which include named argu
 
 
 <ol class="org-ol">
-<li><a id="org50138fb"></a>Example&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
-<div class="outline-text-4" id="text-2-19-1">
+<li><a id="org5b093fe"></a>Example&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span><br />
+<div class="outline-text-4" id="text-2-20-1">
 <div class="org-src-container">
 <pre class="src src-ocaml">val create : ?lo:int -&gt; hi:int -&gt; unit -&gt; int interval
 </pre>
@@ -1171,9 +1248,9 @@ A commonly used recipe to construct function signatures which include named argu
 </div>
 
 
-<div id="outline-container-orgcc52c40" class="outline-3">
-<h3 id="orgcc52c40"><span class="section-number-3">2.20</span> Type-directed record disambiguation</h3>
-<div class="outline-text-3" id="text-2-20">
+<div id="outline-container-orgd1e2cf7" class="outline-3">
+<h3 id="orgd1e2cf7"><span class="section-number-3">2.21</span> Type-directed record disambiguation</h3>
+<div class="outline-text-3" id="text-2-21">
 <div class="org-src-container">
 <pre class="src src-ocaml">type fi_pair = { x : float; y : int; }
 
@@ -1204,12 +1281,12 @@ See <a class='org-ref-reference' href="#Sche12b">Sche12b</a>,<a class='org-ref-r
 
 
 
-<div id="outline-container-org0d67d29" class="outline-2">
-<h2 id="org0d67d29"><span class="section-number-2">3</span> Imperative programming</h2>
+<div id="outline-container-org0e1f505" class="outline-2">
+<h2 id="org0e1f505"><span class="section-number-2">3</span> Imperative programming</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgb160ce4" class="outline-3">
-<h3 id="orgb160ce4"><span class="section-number-3">3.1</span> It's ok to be impure</h3>
+<div id="outline-container-orge9932e2" class="outline-3">
+<h3 id="orge9932e2"><span class="section-number-3">3.1</span> It's ok to be impure</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 A bunch of OCaml primitive constructs are imperative.
@@ -1227,7 +1304,7 @@ A bunch of OCaml primitive constructs are imperative.
 
 
 <ol class="org-ol">
-<li><a id="org75bb991"></a>:B<sub>note</sub>:<br />
+<li><a id="org30ecf6c"></a>:B<sub>note</sub>:<br />
 <div class="outline-text-4" id="text-3-1-1">
 <p>
 No need to read Chris Okasaki <a class='org-ref-reference' href="#Oka98">Oka98</a> Purely Functional Data Structures to understand their implementation.
@@ -1238,8 +1315,8 @@ No need to read Chris Okasaki <a class='org-ref-reference' href="#Oka98">Oka98</
 </div>
 
 
-<div id="outline-container-orga950f8e" class="outline-3">
-<h3 id="orga950f8e"><span class="section-number-3">3.2</span> The unit type</h3>
+<div id="outline-container-orgc52f365" class="outline-3">
+<h3 id="orgc52f365"><span class="section-number-3">3.2</span> The unit type</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 The type of sequence elements (think 'C statement') is <code>unit</code>, which is
@@ -1263,8 +1340,8 @@ inhabited by a single value <code>()</code>.
 </div>
 </div>
 
-<div id="outline-container-org2d006f7" class="outline-3">
-<h3 id="org2d006f7"><span class="section-number-3">3.3</span> What's in a reference?</h3>
+<div id="outline-container-org43fc7a7" class="outline-3">
+<h3 id="org43fc7a7"><span class="section-number-3">3.3</span> What's in a reference?</h3>
 <div class="outline-text-3" id="text-3-3">
 <div class="org-src-container">
 <pre class="src src-ocaml">let x = ref 1
@@ -1297,8 +1374,8 @@ type 'a ref = { mutable contents : 'a; }
 </div>
 
 
-<div id="outline-container-orgce19c38" class="outline-3">
-<h3 id="orgce19c38"><span class="section-number-3">3.4</span> Typical OCaml code</h3>
+<div id="outline-container-orgca49c5f" class="outline-3">
+<h3 id="orgca49c5f"><span class="section-number-3">3.4</span> Typical OCaml code</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Typical code mixes and matches functional and imperative features, usually
@@ -1313,8 +1390,8 @@ You will not be castigated for doing so.
 </div>
 
 
-<div id="outline-container-orgfb8d7fe" class="outline-3">
-<h3 id="orgfb8d7fe"><span class="section-number-3">3.5</span> Cardinal</h3>
+<div id="outline-container-org5b86341" class="outline-3">
+<h3 id="org5b86341"><span class="section-number-3">3.5</span> Cardinal</h3>
 <div class="outline-text-3" id="text-3-5">
 <div class="org-src-container">
 <pre class="src src-ocaml">type 'a set = 'a list 
@@ -1339,8 +1416,8 @@ val cardinal : 'a set -&gt; int = &lt;fun&gt;
 </div>
 </div>
 
-<div id="outline-container-org9427057" class="outline-3">
-<h3 id="org9427057"><span class="section-number-3">3.6</span> String concatenation</h3>
+<div id="outline-container-org9212a61" class="outline-3">
+<h3 id="org9212a61"><span class="section-number-3">3.6</span> String concatenation</h3>
 <div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
 <pre class="src src-ocaml">(* Concatenating the elements of a string list.
@@ -1365,8 +1442,8 @@ let concat =
 </div>
 
 
-<div id="outline-container-org8d97d9c" class="outline-3">
-<h3 id="org8d97d9c"><span class="section-number-3">3.7</span> Trivia :: Hashtables</h3>
+<div id="outline-container-org7a84183" class="outline-3">
+<h3 id="org7a84183"><span class="section-number-3">3.7</span> Trivia :: Hashtables</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 OCaml hashtables have an interesting property 
@@ -1402,8 +1479,8 @@ Use <code>Hashtbl.replace</code> if you want substitution.
 </div>
 
 
-<div id="outline-container-org6359ccd" class="outline-3">
-<h3 id="org6359ccd"><span class="section-number-3">3.8</span> <code>;</code> Pitfall(s)</h3>
+<div id="outline-container-org59bd3d1" class="outline-3">
+<h3 id="org59bd3d1"><span class="section-number-3">3.8</span> <code>;</code> Pitfall(s)</h3>
 <div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
 <pre class="src src-ocaml">(* This function is syntacticlly incorrect *)
@@ -1444,8 +1521,8 @@ let test_and_print =
 </div>
 </div>
 
-<div id="outline-container-orgafe5176" class="outline-3">
-<h3 id="orgafe5176"><span class="section-number-3">3.9</span> Exceptions</h3>
+<div id="outline-container-org784a1b2" class="outline-3">
+<h3 id="org784a1b2"><span class="section-number-3">3.9</span> Exceptions</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
 Exceptions are <b>open</b> algebraic data types with a dedicated construct <code>exception</code>
@@ -1476,8 +1553,8 @@ val nth : int -&gt; 'a list -&gt; 'a = &lt;fun&gt;
 
 
 
-<div id="outline-container-org9787b64" class="outline-3">
-<h3 id="org9787b64"><span class="section-number-3">3.10</span> Local exceptions</h3>
+<div id="outline-container-orgad62f81" class="outline-3">
+<h3 id="orgad62f81"><span class="section-number-3">3.10</span> Local exceptions</h3>
 <div class="outline-text-3" id="text-3-10">
 <div class="org-src-container">
 <pre class="src src-ocaml">(** [find p a] returns 
@@ -1501,12 +1578,12 @@ let find (type a) (p:a -&gt; bool) (arr:a array) =
 </div>
 </div>
 
-<div id="outline-container-orgb5924f0" class="outline-2">
-<h2 id="orgb5924f0"><span class="section-number-2">4</span> More advanced topics</h2>
+<div id="outline-container-org6840f80" class="outline-2">
+<h2 id="org6840f80"><span class="section-number-2">4</span> More advanced topics</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgca56db7" class="outline-3">
-<h3 id="orgca56db7"><span class="section-number-3">4.1</span> What's a module?</h3>
+<div id="outline-container-orga0a5852" class="outline-3">
+<h3 id="orga0a5852"><span class="section-number-3">4.1</span> What's a module?</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 The moment you have 2 files, you will be manipulating <b>modules</b>.
@@ -1531,8 +1608,8 @@ Modules can be recursive.
 </div>
 </div>
 
-<div id="outline-container-org2bdf17f" class="outline-3">
-<h3 id="org2bdf17f"><span class="section-number-3">4.2</span> Interface (<b><code>mli</code></b>) &amp; implementation (<b><code>ml</code></b>)</h3>
+<div id="outline-container-org4d2fb6f" class="outline-3">
+<h3 id="org4d2fb6f"><span class="section-number-3">4.2</span> Interface (<b><code>mli</code></b>) &amp; implementation (<b><code>ml</code></b>)</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 <code>OCaml</code> programmers detach API interfaces (documentation,
@@ -1561,7 +1638,7 @@ functionalities/traits and <code>module</code> for implementing said modules.
 </div>
 
 <ol class="org-ol">
-<li><a id="orgf45ac47"></a>:B<sub>note</sub>:<br />
+<li><a id="org9b50844"></a>:B<sub>note</sub>:<br />
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Think C headers/C separation but with checks, and a real module system.
@@ -1571,12 +1648,12 @@ Think C headers/C separation but with checks, and a real module system.
 </ol>
 </div>
 
-<div id="outline-container-org4eee0b0" class="outline-3">
-<h3 id="org4eee0b0"><span class="section-number-3">4.3</span> <code>mli</code> &amp; <code>ml</code></h3>
+<div id="outline-container-orgdf30465" class="outline-3">
+<h3 id="orgdf30465"><span class="section-number-3">4.3</span> <code>mli</code> &amp; <code>ml</code></h3>
 <div class="outline-text-3" id="text-4-3">
 </div>
 <ol class="org-ol">
-<li><a id="org667791b"></a>Implementation<br />
+<li><a id="org6f89691"></a>Implementation<br />
 <div class="outline-text-4" id="text-4-3-1">
 <div class="org-src-container">
 <pre class="src src-ocaml">type 'a set = 'a list
@@ -1592,7 +1669,7 @@ let intersection s1 s2 =
 </div>
 </li>
 
-<li><a id="org2ad9691"></a>Interface<br />
+<li><a id="org1257d35"></a>Interface<br />
 <div class="outline-text-4" id="text-4-3-2">
 <div class="org-src-container">
 <pre class="src src-ocaml">type 'a set
@@ -1608,8 +1685,8 @@ val intersection: 'a set -&gt; 'a set -&gt; 'a set
 </li>
 </ol>
 </div>
-<div id="outline-container-org01c0677" class="outline-3">
-<h3 id="org01c0677"><span class="section-number-3">4.4</span> Levels of type abstraction&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div id="outline-container-orgad5c572" class="outline-3">
+<h3 id="orgad5c572"><span class="section-number-3">4.4</span> Levels of type abstraction&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-center">
 <p>
@@ -1620,8 +1697,8 @@ level of abstraction.
 </div>
 </div>
 
-<div id="outline-container-org070ec76" class="outline-3">
-<h3 id="org070ec76"><span class="section-number-3">4.5</span> Open visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div id="outline-container-org8e40ff1" class="outline-3">
+<h3 id="org8e40ff1"><span class="section-number-3">4.5</span> Open visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Open types can be directly constructed &amp; destructed
@@ -1664,7 +1741,7 @@ let top2 = top
 
 
 
-<div id="outline-container-orge81833c" class="outline-3">
+<div id="outline-container-org4dad995" class="outline-3">
 <h3 id="private_module"><span class="section-number-3">4.6</span> Private visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
 <div class="outline-text-3" id="text-private_module">
 <p>
@@ -1730,8 +1807,8 @@ Error: Cannot create values of the private type Interval_private.t
 </div>
 
 
-<div id="outline-container-org54ac48e" class="outline-3">
-<h3 id="org54ac48e"><span class="section-number-3">4.7</span> Abstract visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
+<div id="outline-container-org693ba58" class="outline-3">
+<h3 id="org693ba58"><span class="section-number-3">4.7</span> Abstract visibility&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_frame">B_frame</span></span></h3>
 <div class="outline-text-3" id="text-4-7">
 <p>
 <b>Abstract types</b> can be constructed &amp; destructed only be predefined functions
@@ -1811,8 +1888,8 @@ Error: Cannot create values of the private type Interval_private.t
 
 
 
-<div id="outline-container-org2911b06" class="outline-3">
-<h3 id="org2911b06"><span class="section-number-3">4.8</span> Genericity: let-polymorphism</h3>
+<div id="outline-container-org56120f9" class="outline-3">
+<h3 id="org56120f9"><span class="section-number-3">4.8</span> Genericity: let-polymorphism</h3>
 <div class="outline-text-3" id="text-4-8">
 <div class="org-src-container">
 <pre class="src src-ocaml">let rec length = function 
@@ -1829,8 +1906,8 @@ Error: Cannot create values of the private type Interval_private.t
 </div>
 </div>
 
-<div id="outline-container-org2d15a2e" class="outline-3">
-<h3 id="org2d15a2e"><span class="section-number-3">4.9</span> Genericity: Functors</h3>
+<div id="outline-container-org6f01976" class="outline-3">
+<h3 id="org6f01976"><span class="section-number-3">4.9</span> Genericity: Functors</h3>
 <div class="outline-text-3" id="text-4-9">
 <p>
 The standard library has functors for sets, maps (tree-based persistent
@@ -1898,8 +1975,8 @@ Format.printf "@[&lt;h&gt;%a@]" pp_slist  ["foo"; "bar"; "bar";] ;;
 </div>
 </div>
 
-<div id="outline-container-orga36482d" class="outline-3">
-<h3 id="orga36482d"><span class="section-number-3">4.10</span> First-class modules</h3>
+<div id="outline-container-org8dc74f6" class="outline-3">
+<h3 id="org8dc74f6"><span class="section-number-3">4.10</span> First-class modules</h3>
 <div class="outline-text-3" id="text-4-10">
 <p>
 Modules can also be used as "first-class" values.
@@ -1929,8 +2006,8 @@ module Int = struct type t = int let compare = Stdlib.compare end ;;
 </div>
 </div>
 
-<div id="outline-container-orgf037680" class="outline-3">
-<h3 id="orgf037680"><span class="section-number-3">4.11</span> Using first-class module</h3>
+<div id="outline-container-orgfc97d01" class="outline-3">
+<h3 id="orgfc97d01"><span class="section-number-3">4.11</span> Using first-class module</h3>
 <div class="outline-text-3" id="text-4-11">
 <div class="org-src-container">
 <pre class="src src-ocaml">lmax (module Int) [1;2;3;] ;;
@@ -1956,8 +2033,8 @@ lmax (module String) ["foo"; "bar"; "baz";] ;;
 </div>
 
 
-<div id="outline-container-orgdabd96c" class="outline-3">
-<h3 id="orgdabd96c"><span class="section-number-3">4.12</span> More involved example</h3>
+<div id="outline-container-org5ed0cd1" class="outline-3">
+<h3 id="org5ed0cd1"><span class="section-number-3">4.12</span> More involved example</h3>
 <div class="outline-text-3" id="text-4-12">
 <div class="org-src-container">
 <pre class="src src-ocaml">type ('var,'cst,'bop,'uop) expr =
@@ -1979,8 +2056,8 @@ end
 </div>
 </div>
 
-<div id="outline-container-org9effd01" class="outline-3">
-<h3 id="org9effd01"><span class="section-number-3">4.13</span> Defining an <code>EXPR</code> module</h3>
+<div id="outline-container-org8c0b7fb" class="outline-3">
+<h3 id="org8c0b7fb"><span class="section-number-3">4.13</span> Defining an <code>EXPR</code> module</h3>
 <div class="outline-text-3" id="text-4-13">
 <div class="org-src-container">
 <pre class="src src-ocaml">module Bool = struct
@@ -2000,8 +2077,8 @@ end
 </div>
 </div>
 
-<div id="outline-container-orgdf32fc7" class="outline-3">
-<h3 id="orgdf32fc7"><span class="section-number-3">4.14</span> Generic free variable computation</h3>
+<div id="outline-container-orge75313e" class="outline-3">
+<h3 id="orge75313e"><span class="section-number-3">4.14</span> Generic free variable computation</h3>
 <div class="outline-text-3" id="text-4-14">
 <div class="org-src-container">
 <pre class="src src-ocaml">let free_variables (type a b c d)
@@ -2043,8 +2120,8 @@ end
 
 
 
-<div id="outline-container-orgb222e12" class="outline-3">
-<h3 id="orgb222e12"><span class="section-number-3">4.15</span> Monadic style programming</h3>
+<div id="outline-container-org43cb8ee" class="outline-3">
+<h3 id="org43cb8ee"><span class="section-number-3">4.15</span> Monadic style programming</h3>
 <div class="outline-text-3" id="text-4-15">
 <p>
 The following type has been making a comeback.
@@ -2072,8 +2149,8 @@ operator (<code>&gt;&gt;=</code>)
 </div>
 </div>
 
-<div id="outline-container-org835f3c0" class="outline-3">
-<h3 id="org835f3c0"><span class="section-number-3">4.16</span> Option type, monadic style</h3>
+<div id="outline-container-org6012ddc" class="outline-3">
+<h3 id="org6012ddc"><span class="section-number-3">4.16</span> Option type, monadic style</h3>
 <div class="outline-text-3" id="text-4-16">
 <div class="org-src-container">
 <pre class="src src-ocaml">let (&gt;&gt;=) = Option.bind 
@@ -2098,11 +2175,11 @@ val sum_heads : int list -&gt; int list -&gt; int option = &lt;fun&gt;
 </div>
 </div>
 
-<div id="outline-container-orgcec9280" class="outline-3">
-<h3 id="orgcec9280"><span class="section-number-3">4.17</span> GADTs</h3>
+<div id="outline-container-orge4047ec" class="outline-3">
+<h3 id="orge4047ec"><span class="section-number-3">4.17</span> GADTs</h3>
 <div class="outline-text-3" id="text-4-17">
 <p>
-Generalized Abstract Data Types are available in <code>OCaml</code> since version
+Generalized Algebraic Data Types are available in <code>OCaml</code> since version
 <code>4.00</code> (<a class='org-ref-reference' href="#PotRG06POPL">PotRG06POPL</a>,<a class='org-ref-reference' href="#ProgGADTS">ProgGADTS</a>).
 </p>
 
@@ -2207,8 +2284,8 @@ eval term2 ;;
 </div>
 
 
-<div id="outline-container-org35a3934" class="outline-3">
-<h3 id="org35a3934"><span class="section-number-3">4.18</span> Death by GADTs</h3>
+<div id="outline-container-org704b323" class="outline-3">
+<h3 id="org704b323"><span class="section-number-3">4.18</span> Death by GADTs</h3>
 <div class="outline-text-3" id="text-4-18">
 <p>
 With great expressiveness may come great unreadability ;-)
@@ -2243,8 +2320,8 @@ let rec erase_rel : type a b c d e f g h i j k l .
 </div>
 
 
-<div id="outline-container-org798d165" class="outline-3">
-<h3 id="org798d165"><span class="section-number-3">4.19</span> <code>Format</code>'ing text</h3>
+<div id="outline-container-org42bd984" class="outline-3">
+<h3 id="org42bd984"><span class="section-number-3">4.19</span> <code>Format</code>'ing text</h3>
 <div class="outline-text-3" id="text-4-19">
 <p>
 The <code>Format</code> module is a pretty-printing facility
@@ -2266,8 +2343,8 @@ available in the standard library with a <code>Printf</code>-like string format.
 </div>
 </div>
 
-<div id="outline-container-org79afad6" class="outline-3">
-<h3 id="org79afad6"><span class="section-number-3">4.20</span> <code>Format</code> example</h3>
+<div id="outline-container-orgd77888a" class="outline-3">
+<h3 id="orgd77888a"><span class="section-number-3">4.20</span> <code>Format</code> example</h3>
 <div class="outline-text-3" id="text-4-20">
 <div class="org-src-container">
 <pre class="src src-ocaml">module E = struct
@@ -2304,8 +2381,8 @@ For more: <a class='org-ref-reference' href="#BonWeis18">BonWeis18</a>
 </div>
 
 
-<div id="outline-container-org8e777e6" class="outline-3">
-<h3 id="org8e777e6"><span class="section-number-3">4.21</span> Polymorphic variants</h3>
+<div id="outline-container-orge158d40" class="outline-3">
+<h3 id="orge158d40"><span class="section-number-3">4.21</span> Polymorphic variants</h3>
 <div class="outline-text-3" id="text-4-21">
 <div class="org-src-container">
 <pre class="src src-ocaml">type const = [ `True | `False ]
@@ -2347,8 +2424,8 @@ See <a class='org-ref-reference' href="#Yak08">Yak08</a>,<a class='org-ref-refer
 </div>
 
 
-<div id="outline-container-orgb01d954" class="outline-3">
-<h3 id="orgb01d954"><span class="section-number-3">4.22</span> Things that I did not talk about</h3>
+<div id="outline-container-orga88f163" class="outline-3">
+<h3 id="orga88f163"><span class="section-number-3">4.22</span> Things that I did not talk about</h3>
 <div class="outline-text-3" id="text-4-22">
 <ul class="org-ul">
 <li>Low-level representation <a class='org-ref-reference' href="#lowLevelOCaml">lowLevelOCaml</a></li>
@@ -2368,12 +2445,12 @@ See <a class='org-ref-reference' href="#Yak08">Yak08</a>,<a class='org-ref-refer
 </div>
 </div>
 
-<div id="outline-container-org7c03b73" class="outline-2">
-<h2 id="org7c03b73"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-org9f25f4d" class="outline-2">
+<h2 id="org9f25f4d"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org8ec2b34" class="outline-3">
-<h3 id="org8ec2b34"><span class="section-number-3">5.1</span> Give it a try</h3>
+<div id="outline-container-org4907716" class="outline-3">
+<h3 id="org4907716"><span class="section-number-3">5.1</span> Give it a try</h3>
 <div class="outline-text-3" id="text-5-1">
 <div class="org-center">
 <p>
@@ -2396,8 +2473,8 @@ See <a class='org-ref-reference' href="#Yak08">Yak08</a>,<a class='org-ref-refer
 </div>
 
 
-<div id="outline-container-orga0ef915" class="outline-3">
-<h3 id="orga0ef915"><span class="section-number-3">5.2</span> Final remark</h3>
+<div id="outline-container-orgf5003af" class="outline-3">
+<h3 id="orgf5003af"><span class="section-number-3">5.2</span> Final remark</h3>
 <div class="outline-text-3" id="text-5-2">
 <blockquote>
 <p>
@@ -2420,8 +2497,8 @@ Sylvain Conchon
 </div>
 </div>
 
-<div id="outline-container-orgb33cbde" class="outline-3">
-<h3 id="orgb33cbde"><span class="section-number-3">5.3</span> Questions?</h3>
+<div id="outline-container-orge79bc07" class="outline-3">
+<h3 id="orge79bc07"><span class="section-number-3">5.3</span> Questions?</h3>
 <div class="outline-text-3" id="text-5-3">
 <div class="org-center">
 
@@ -2440,8 +2517,8 @@ Sylvain Conchon
 </div>
 </div>
 
-<div id="outline-container-org16e693a" class="outline-2">
-<h2 id="org16e693a"><span class="section-number-2">6</span> References&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span></h2>
+<div id="outline-container-orgf0e5a63" class="outline-2">
+<h2 id="orgf0e5a63"><span class="section-number-2">6</span> References&#xa0;&#xa0;&#xa0;<span class="tag"><span class="B_ignoreheading">B_ignoreheading</span></span></h2>
 <div class="outline-text-2" id="text-6">
 <p>
 
@@ -2473,7 +2550,7 @@ Sylvain Conchon
 <div id="postamble" class="status">
 <p class="date">Date: 20200625</p>
 <p class="author">Author: Richard B.</p>
-<p class="date">Created: 2020-06-26 Fri 07:46</p>
+<p class="date">Created: 2020-06-27 Sat 10:33</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
